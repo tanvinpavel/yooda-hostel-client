@@ -1,7 +1,8 @@
 # Welcome to Wooda Hostel
 
-Live Site Link [Live Site Link](https://quizzical-brahmagupta-875937.netlify.app/home). </br>
-REST API Of Yooda Hostel Git Repository Link [Git Repository Link](https://github.com/tanvinpavel/yooda-hostel-server).
+Live Site Link <a href="https://quizzical-brahmagupta-875937.netlify.app/home" target="_blank">Live Site Link</a>
+</br>
+REST API Of Yooda Hostel Git Repository Link <a href="https://github.com/tanvinpavel/yooda-hostel-server" target="_blank">Git Repository Link</a>.
 
 
 ## Usage Language
