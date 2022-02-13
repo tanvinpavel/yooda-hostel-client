@@ -1,71 +1,44 @@
-# Getting Started with Create React App
+# Welcome to Wooda Hostel
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Live Site Link [Live Site Link](https://quizzical-brahmagupta-875937.netlify.app/home). </br>
+REST API Of Yooda Hostel Git Repository Link [Git Repository Link](https://github.com/tanvinpavel/yooda-hostel-server).
 
-## Available Scripts
 
-In the project directory, you can run:
+## Usage Language
 
-### `npm start`
+- javascript
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Library & Framework
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Node.js / Express.js
+- React.js
 
-### `npm test`
+## Extra Library
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Cors
+- Nodemon
+- React Form Hook
+- React Router DOM v6
+- SweetAlert
+- Heroku
 
-### `npm run build`
+## CSS Library
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- bootstrap
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Description
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**`Yooda Hostel` is a reputed hostel in Dhaka. They are facing some issues in planning and distributing 
+food to their students. You need to build an application to solve their issue. They have prepared 
+requirements for you**
 
-### `npm run eject`
+- Admin can add food with price.Form will have - food name, cost price,after adding show it in a table (backend pagination mandatory) , He can edit and delete each item.
+- Admin can add new student , Form will contain - full name, roll,age, class, hall name , status (“active”, “inActive”, )
+- Student table will have a checkbox in every row, and the admin can change status ( “inActive”, “active”) by selecting multiple items from the table.(Bulk action by single button click).
+- There will be a student table (backend pagination mandatory), edit and delete items.
+- While serving food, create a distribution form where admin can search students by roll, select 
+“shift” from drop down, “Date”. Add food item they want to take, Then change the status to 
+“served”
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- If a student has been already serve in that shift on date, show a message - “Already served”
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# yooda-hostel-client
