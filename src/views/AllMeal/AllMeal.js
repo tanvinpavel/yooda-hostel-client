@@ -40,7 +40,13 @@ const AllMeal = () => {
 
   return (
     <div className="container">
-      <div className="row justify-content-md-center">
+      {
+        meals.length === 0 ? <div className="d-flex justify-content-center align-items-center" style={{"height": "500px"}}>
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div> : <div className="row justify-content-md-center">
+
         <div className="col-md-8">
           <table className="table table-dark table-hover mt-5 table-bordered text-center">
             <thead>
@@ -79,6 +85,7 @@ const AllMeal = () => {
           </table>
         </div>
       </div>
+      }
     </div>
   );
 };

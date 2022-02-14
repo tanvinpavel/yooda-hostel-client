@@ -114,16 +114,20 @@ const DistributionForm = (props) => {
                     </div>
                   </div>
                   <div className="col-md-4 mt-5">
-                      <div className="card"  style={{"height": "240px"}}>
-                        <div className="card-body">
-                        <label htmlFor="foodList" className="form-label">Choose Menu (<small>Use ctrl to select multiple option</small>)</label>
-                        <select id="foodList" {...register("foodList")} className="form-select" form='form1' multiple required>
-                          <option disabled>Food Menu</option>
-                          {
-                            meals.map(m => <option key={m._id} value={m._id}>{m.name} ----- {m.price} TK</option>)
-                          }
-                        </select>
-                      </div>
+                    <div className="card-body">
+                    <label htmlFor="foodList" className="form-label">Choose Menu (<small>Use ctrl to select multiple option</small>)</label>
+                      {
+                        meals.length === 0 ? <div className="d-flex justify-content-center align-items-center" style={{"height": "200px"}}>
+                          <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        </div> : <select id="foodList" {...register("foodList")} className="form-select" form='form1' multiple required>
+                              <option disabled>Food Menu</option>
+                              {
+                                meals.map(m => <option key={m._id} value={m._id}>{m.name} ----- {m.price} TK</option>)
+                              }
+                          </select>
+                      }
                     </div>
                   </div>
                 </div>
