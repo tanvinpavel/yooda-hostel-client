@@ -12,7 +12,7 @@ const StudentUpdate = () => {
     fetch(`https://powerful-river-71836.herokuapp.com/student/${id}`)
       .then((res) => res.json())
       .then((data) => { delete data.receive; setStudent(data)});
-  }, []);
+  }, [id]);
 
   
 
