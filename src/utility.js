@@ -1,5 +1,5 @@
 const getChangesValue = (newObj, oldObj) => {
-    if (Object.keys(oldObj).length == 0 
+    if (Object.keys(oldObj).length === 0 
         && Object.keys(newObj).length > 0)
         return newObj;
 
@@ -16,4 +16,17 @@ const getChangesValue = (newObj, oldObj) => {
     return diff;
 }
 
-export {getChangesValue};
+const currentDate = () => {
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth()+1;
+    if(month.toString().length === 1){
+      month = '0'+month;
+    }
+    let currentDate = today.getDate();
+    let formateDate = year+"-"+month+"-"+currentDate;
+
+    return formateDate;
+}
+
+export {getChangesValue, currentDate};

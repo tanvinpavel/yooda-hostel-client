@@ -19,18 +19,21 @@ const Update = () => {
     <div className="container">
       <div className="row justify-content-md-center">
         <div className="col-md-6">
-          <div className="card mt-5">
-            <div className="card-body">
-              <h5 className="card-title mb-5">Update Meal Info</h5>
-              {
-                meal ? <UpdateForm meal={meal}/> : <div className="d-flex justify-content-center align-items-center" style={{"height": "160px"}}>
-                  <div className="spinner-border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
-                </div>
-              }
+          {
+            meal ?
+            <div className="card mt-5 border-0" style={{"background": "#f2f2f2"}}>
+              <div className="card-body shadow">
+                <h5 className="card-title mb-5">Update Meal Info</h5>
+                   <UpdateForm meal={meal}/>
+              </div>
             </div>
-          </div>
+            : 
+            <div className="d-flex justify-content-center align-items-center" style={{"height": "600px"}}>
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          }
         </div>
       </div>
     </div>

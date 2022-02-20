@@ -173,7 +173,7 @@ const UpdateForm = (props) => {
                     </div>
                   </div>
                 </div>
-                <button type="submit" className="btn btn-primary offset-2">
+                <button type="submit" className="btn btn-primary offset-3">
                   Add
                 </button>
               </form>

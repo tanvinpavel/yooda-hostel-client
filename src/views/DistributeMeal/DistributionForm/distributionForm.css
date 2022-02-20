@@ -1,0 +1,14 @@
+.hasValue{
+    border: 1px solid rgb(220, 0, 0);
+    border-radius: 3px;
+}
+
+.meal-card{
+    max-height: 175px;
+    overflow: auto;
+}
+
+.inValid-message{
+    font-size: 12px;
+    color: red;
+}

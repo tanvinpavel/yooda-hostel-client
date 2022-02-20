@@ -47,7 +47,30 @@ const AllMeal = () => {
           </div>
         </div> : <div className="row justify-content-md-center">
 
-        <div className="col-md-8">
+        <div className="col-md-8 mt-3">
+
+          <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <div className="btn-group" role="group">
+              <button id="btnGroupDrop2" type="button" className="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Active/Deactive
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                <li><a className="dropdown-item" href="#">Dropdown link</a></li>
+                <li><a className="dropdown-item" href="#">Dropdown link</a></li>
+              </ul>
+            </div>
+
+            <div className="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" className="btn btn-outline-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Limit
+              </button>
+              <ul className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <li><a className="dropdown-item" href="#">5/Page</a></li>
+                <li><a className="dropdown-item" href="#">10/Page</a></li>
+              </ul>
+            </div>
+          </div>
+
           <table className="table table-dark table-hover mt-5 table-bordered text-center">
             <thead>
               <tr>

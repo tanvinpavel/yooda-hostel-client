@@ -25,7 +25,7 @@ const AddStudent = () => {
     <div className="container">
       <div className="row justify-content-md-center">
         <div className="col-md-6">
-          <div className="card mt-5">
+          <div className="card mt-5 border-0" style={{"background": "#f2f2f2"}}>
             <div className="card-body">
               <h5 className="card-title mb-5">Add A New Student</h5>
               <form method="post" onSubmit={handleSubmit(formDataHandler)}>

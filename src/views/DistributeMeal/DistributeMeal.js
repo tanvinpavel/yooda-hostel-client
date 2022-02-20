@@ -20,12 +20,22 @@ const DistributeMeal = () => {
         }
       )
         .then((res) => res.json())
-        .then((data) => setStudent(data));
+        .then((data) => {
+          if(data){
+            setStudent(data)
+          }else{
+            Swal.fire({
+              icon: "warning",
+              title: "Not Found",
+              text: "Student not registered",
+            });
+          }
+        });
     } else {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Please a valid roll number!",
+        text: "Please enter a valid roll number!",
       });
     }
   };
