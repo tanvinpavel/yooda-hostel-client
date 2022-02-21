@@ -9,21 +9,18 @@ const DistributeMeal = () => {
 
   const searchStudent = (data) => {
     if (data.roll.length > 0) {
-      fetch(
-        "https://powerful-river-71836.herokuapp.com/student/searchStudent",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      )
+      fetch("http://localhost:4000/student/searchStudent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
         .then((res) => res.json())
         .then((data) => {
-          if(data){
-            setStudent(data)
-          }else{
+          if (data) {
+            setStudent(data);
+          } else {
             Swal.fire({
               icon: "warning",
               title: "Not Found",
@@ -73,7 +70,7 @@ const DistributeMeal = () => {
           </div>
         </div>
 
-        <DistributionForm info={student} />
+        <DistributionForm student={student} setStudent={setStudent} />
       </div>
     </div>
   );

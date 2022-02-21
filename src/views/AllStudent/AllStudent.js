@@ -12,9 +12,7 @@ const AllStudent = () => {
   let count;
 
   useEffect(() => {
-    fetch(
-      `https://powerful-river-71836.herokuapp.com/student?page=${currentPage}&&size=${size}`
-    )
+    fetch(`http://localhost:4000/student?page=${currentPage}&&size=${size}`)
       .then((res) => res.json())
       .then((data) => {
         setStudent(data.student);
@@ -35,12 +33,9 @@ const AllStudent = () => {
       confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://powerful-river-71836.herokuapp.com/student/deleteStudent/${id}`,
-          {
-            method: "DELETE",
-          }
-        )
+        fetch(`http://localhost:4000/student/deleteStudent/${id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount === 1) {
@@ -55,16 +50,13 @@ const AllStudent = () => {
   };
 
   const activeHandler = (data) => {
-    fetch(
-      "https://powerful-river-71836.herokuapp.com/student/updateStatus/active",
-      {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("http://localhost:4000/student/updateStatus/active", {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
@@ -74,16 +66,13 @@ const AllStudent = () => {
   };
 
   const inActiveHandler = (data) => {
-    fetch(
-      "https://powerful-river-71836.herokuapp.com/student/updateStatus/inActive",
-      {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch("http://localhost:4000/student/updateStatus/inActive", {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {

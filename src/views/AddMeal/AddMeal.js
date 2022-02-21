@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 const AddMeal = () => {
   const { register, handleSubmit, reset } = useForm();
   const formDataHandler = (data) => {
-    fetch("https://powerful-river-71836.herokuapp.com/meal/addMeal", {
+    fetch("http://localhost:4000/meal/addMeal", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -24,7 +24,7 @@ const AddMeal = () => {
     <div className="container">
       <div className="row justify-content-md-center">
         <div className="col-md-6">
-          <div className="card mt-5 border-0" style={{"background": "#f2f2f2"}}>
+          <div className="card mt-5 border-0" style={{ background: "#f2f2f2" }}>
             <div className="card-body">
               <h5 className="card-title mb-5">Add New Meal</h5>
               <form method="post" onSubmit={handleSubmit(formDataHandler)}>
