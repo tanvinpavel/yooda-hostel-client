@@ -43,6 +43,16 @@ const MonthlyMemo = () => {
                         <h6>Roll: {student.roll}</h6>
                     </div>
                     <h4 className='text-center mb-3'>Monthly Memo</h4>
+                    {
+                        allOrder.length === 0 ? <div
+                        className="d-flex justify-content-center align-items-center"
+                        style={{ height: "300px" }}
+                      >
+                        <div className="spinner-border" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      </div> 
+                    :
                     <table className="table table-bordered text-center">
                         <thead>
                             <tr>
@@ -72,6 +82,7 @@ const MonthlyMemo = () => {
                             <tr><td colSpan="4"></td><td>Total={totalPrice}tk</td></tr>
                         </tbody>
                     </table>
+                    }
                 </div>
             </div>
         </div>
