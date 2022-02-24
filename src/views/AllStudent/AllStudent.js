@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AllStudent = () => {
@@ -9,6 +9,7 @@ const AllStudent = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [size, setSize] = useState(4);
+  let [item, setItem] = useState(0);
   let count;
 
   useEffect(() => {
@@ -81,6 +82,14 @@ const AllStudent = () => {
       });
   };
 
+  const counterFunction = (e) => {
+    if(e.target.checked === true){
+      setItem(item+1);
+    }else{
+      setItem(item-1);
+    }
+  }
+
   return (
     <div className="container">
       {student.length === 0 ? (
@@ -96,25 +105,26 @@ const AllStudent = () => {
         <div className="row justify-content-md-center">
           <div className="col-md-8">
             <h3 className="text-center mt-3">All Student Data</h3>
+            <div className="d-flex justify-content-between">
             <div
-              className="btn-group btn-group-sm"
+              className="btn-group"
               role="group"
               aria-label="Button group with nested dropdown"
             >
-              <div className="btn-group ms-auto" role="group">
+              <div className="btn-group" role="group">
                 <button
-                  id="btnGroupDrop1"
+                  id="btnGroupDrop2"
                   type="button"
-                  className="btn btn-dark dropdown-toggle"
+                  className="btn btn-outline-dark dropdown-toggle"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Bulk Action
+                  Active/Deactive
                 </button>
-                <ul className="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <ul className="dropdown-menu" aria-labelledby="btnGroupDrop2">
                   <li>
                     <form onClick={handleSubmit(activeHandler)} id="form1">
-                      <button className="dropdown-item" onClick={() => {}}>
+                      <button type="submit" className="dropdown-item">
                         Active
                       </button>
                     </form>
@@ -127,11 +137,13 @@ const AllStudent = () => {
                     </form>
                   </li>
                 </ul>
-                <div className="btn-group" role="group">
-                  <button
+              </div>
+
+              <div className="btn-group" role="group">
+              <button
                     id="btnGroupDrop2"
                     type="button"
-                    className="btn btn-primary dropdown-toggle"
+                    className="btn btn-outline-primary dropdown-toggle"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
@@ -159,8 +171,9 @@ const AllStudent = () => {
                       </button>
                     </li>
                   </ul>
-                </div>
               </div>
+            </div>
+              {item>0 && <div>{item} selected</div>}
             </div>
 
             <nav aria-label="Page navigation example">
@@ -227,7 +240,11 @@ const AllStudent = () => {
                 {student.map((student, i) => (
                   <tr key={student._id}>
                     <th scope="row">{i + 1}</th>
-                    <td>{student.name}</td>
+                    <td>
+                      <Link to={`/memo/${student._id}`}>
+                        {student.name}
+                      </Link>
+                    </td>
                     <td>{student.roll}</td>
                     <td>{student.age}</td>
                     <td>{student.class}</td>
@@ -249,6 +266,7 @@ const AllStudent = () => {
                         type="checkbox"
                         id="checkboxNoLabel"
                         value={student._id}
+                        onClick={(e)=>{counterFunction(e)}}
                         {...register("status")}
                         form="form1"
                       />

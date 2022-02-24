@@ -8,6 +8,7 @@ import AddStudent from './views/AddStudent/AddStudent';
 import AllStudent from './views/AllStudent/AllStudent';
 import StudentUpdate from './views/StudentUpdate/StudentUpdate';
 import DistributeMeal from './views/DistributeMeal/DistributeMeal';
+import MonthlyMemo from "./views/MonthlyMemo/MonthlyMemo";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/allStudent" element={<AllStudent/>} />
         <Route path="/student/update/:id" element={<StudentUpdate/>} />
         <Route path="/distributeMeal" element={<DistributeMeal/>} />
+        <Route path="/memo/:id" element={<MonthlyMemo/>} />
       </Routes>
     </>
   );

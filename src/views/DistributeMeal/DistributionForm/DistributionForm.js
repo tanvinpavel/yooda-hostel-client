@@ -14,7 +14,7 @@ const DistributionForm = (props) => {
   useEffect(() => {
     fetch("http://localhost:4000/meal")
       .then((res) => res.json())
-      .then((data) => setMeals(data));
+      .then((data) => setMeals(data.payload));
   }, []);
 
   const formateDate = currentDate();
@@ -37,7 +37,7 @@ const DistributionForm = (props) => {
         foodList: data.foodList,
       };
 
-      if (data.foodList.length > 1) {
+      if (data.foodList.length > 2) {
         setErrorM(0);
         if (student?.receive) {
           let Dshift = student.receive.shift;
@@ -217,18 +217,23 @@ const DistributionForm = (props) => {
                         key={m._id}
                         style={{ background: "#e9ecef" }}
                       >
-                        <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            {...register("foodList")}
-                            value={m._id}
-                            type="checkbox"
-                            id={m._id}
-                            required
-                          />
-                          <label className="form-check-label" htmlFor={m._id}>
-                            {m.name}
-                          </label>
+                        <div className="form-check d-flex justify-content-between">
+                          <span>
+                            <input
+                              className="form-check-input"
+                              {...register("foodList")}
+                              value={m._id}
+                              type="checkbox"
+                              id={m._id}
+                              required
+                            />
+                            <label className="form-check-label" htmlFor={m._id}>
+                              {m.name}
+                            </label>
+                          </span>
+                          <span>
+                            {m.price}tk
+                          </span>
                         </div>
                       </li>
                     ))}

@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 const AddMeal = () => {
   const { register, handleSubmit, reset } = useForm();
   const formDataHandler = (data) => {
+    console.log(data);
     fetch("http://localhost:4000/meal/addMeal", {
       method: "POST",
       headers: {
@@ -47,7 +48,7 @@ const AddMeal = () => {
                 </div>
                 <div className="row mb-3">
                   <label
-                    htmlFor="inputPassword3"
+                    htmlFor="input3"
                     className="col-sm-2 col-form-label"
                   >
                     Price
@@ -56,7 +57,7 @@ const AddMeal = () => {
                     <input
                       type="number"
                       className="form-control"
-                      id="inputPassword3"
+                      id="input3"
                       {...register("price")}
                       placeholder="Price"
                     />
