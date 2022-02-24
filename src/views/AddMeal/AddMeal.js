@@ -5,7 +5,7 @@ const AddMeal = () => {
   const { register, handleSubmit, reset } = useForm();
   const formDataHandler = (data) => {
     console.log(data);
-    fetch("http://localhost:4000/meal/addMeal", {
+    fetch("https://powerful-river-71836.herokuapp.com/meal/addMeal", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -47,10 +47,7 @@ const AddMeal = () => {
                   </div>
                 </div>
                 <div className="row mb-3">
-                  <label
-                    htmlFor="input3"
-                    className="col-sm-2 col-form-label"
-                  >
+                  <label htmlFor="input3" className="col-sm-2 col-form-label">
                     Price
                   </label>
                   <div className="col-sm-10">

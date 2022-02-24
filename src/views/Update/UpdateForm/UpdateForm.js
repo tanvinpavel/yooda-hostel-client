@@ -12,13 +12,16 @@ const UpdateForm = ({ meal }) => {
   const editDataHandler = (formData) => {
     const updatedData = getChangesValue(formData, meal);
     if (Object.keys(updatedData).length !== 0) {
-      fetch(`http://localhost:4000/meal/update/${meal._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
-      })
+      fetch(
+        `https://powerful-river-71836.herokuapp.com/meal/update/${meal._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data.modifiedCount > 0) {

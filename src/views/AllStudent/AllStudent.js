@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink, Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AllStudent = () => {
@@ -13,7 +13,9 @@ const AllStudent = () => {
   let count;
 
   useEffect(() => {
-    fetch(`http://localhost:4000/student?page=${currentPage}&&size=${size}`)
+    fetch(
+      `https://powerful-river-71836.herokuapp.com/student?page=${currentPage}&&size=${size}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setStudent(data.student);
@@ -34,9 +36,12 @@ const AllStudent = () => {
       confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:4000/student/deleteStudent/${id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://powerful-river-71836.herokuapp.com/student/deleteStudent/${id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount === 1) {
@@ -51,13 +56,16 @@ const AllStudent = () => {
   };
 
   const activeHandler = (data) => {
-    fetch("http://localhost:4000/student/updateStatus/active", {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      "https://powerful-river-71836.herokuapp.com/student/updateStatus/active",
+      {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
@@ -67,13 +75,16 @@ const AllStudent = () => {
   };
 
   const inActiveHandler = (data) => {
-    fetch("http://localhost:4000/student/updateStatus/inActive", {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      "https://powerful-river-71836.herokuapp.com/student/updateStatus/inActive",
+      {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
@@ -83,12 +94,12 @@ const AllStudent = () => {
   };
 
   const counterFunction = (e) => {
-    if(e.target.checked === true){
-      setItem(item+1);
-    }else{
-      setItem(item-1);
+    if (e.target.checked === true) {
+      setItem(item + 1);
+    } else {
+      setItem(item - 1);
     }
-  }
+  };
 
   return (
     <div className="container">
@@ -106,41 +117,41 @@ const AllStudent = () => {
           <div className="col-md-8">
             <h3 className="text-center mt-3">All Student Data</h3>
             <div className="d-flex justify-content-between">
-            <div
-              className="btn-group"
-              role="group"
-              aria-label="Button group with nested dropdown"
-            >
-              <div className="btn-group" role="group">
-                <button
-                  id="btnGroupDrop2"
-                  type="button"
-                  className="btn btn-outline-dark dropdown-toggle"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Active/Deactive
-                </button>
-                <ul className="dropdown-menu" aria-labelledby="btnGroupDrop2">
-                  <li>
-                    <form onClick={handleSubmit(activeHandler)} id="form1">
-                      <button type="submit" className="dropdown-item">
-                        Active
-                      </button>
-                    </form>
-                  </li>
-                  <li>
-                    <form onClick={handleSubmit(inActiveHandler)} id="form1">
-                      <button type="submit" className="dropdown-item">
-                        Inactive
-                      </button>
-                    </form>
-                  </li>
-                </ul>
-              </div>
+              <div
+                className="btn-group"
+                role="group"
+                aria-label="Button group with nested dropdown"
+              >
+                <div className="btn-group" role="group">
+                  <button
+                    id="btnGroupDrop2"
+                    type="button"
+                    className="btn btn-outline-dark dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Active/Deactive
+                  </button>
+                  <ul className="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                    <li>
+                      <form onClick={handleSubmit(activeHandler)} id="form1">
+                        <button type="submit" className="dropdown-item">
+                          Active
+                        </button>
+                      </form>
+                    </li>
+                    <li>
+                      <form onClick={handleSubmit(inActiveHandler)} id="form1">
+                        <button type="submit" className="dropdown-item">
+                          Inactive
+                        </button>
+                      </form>
+                    </li>
+                  </ul>
+                </div>
 
-              <div className="btn-group" role="group">
-              <button
+                <div className="btn-group" role="group">
+                  <button
                     id="btnGroupDrop2"
                     type="button"
                     className="btn btn-outline-primary dropdown-toggle"
@@ -171,9 +182,9 @@ const AllStudent = () => {
                       </button>
                     </li>
                   </ul>
+                </div>
               </div>
-            </div>
-              {item>0 && <div>{item} selected</div>}
+              {item > 0 && <div>{item} selected</div>}
             </div>
 
             <nav aria-label="Page navigation example">
@@ -241,9 +252,7 @@ const AllStudent = () => {
                   <tr key={student._id}>
                     <th scope="row">{i + 1}</th>
                     <td>
-                      <Link to={`/memo/${student._id}`}>
-                        {student.name}
-                      </Link>
+                      <Link to={`/memo/${student._id}`}>{student.name}</Link>
                     </td>
                     <td>{student.roll}</td>
                     <td>{student.age}</td>
@@ -266,7 +275,9 @@ const AllStudent = () => {
                         type="checkbox"
                         id="checkboxNoLabel"
                         value={student._id}
-                        onClick={(e)=>{counterFunction(e)}}
+                        onClick={(e) => {
+                          counterFunction(e);
+                        }}
                         {...register("status")}
                         form="form1"
                       />

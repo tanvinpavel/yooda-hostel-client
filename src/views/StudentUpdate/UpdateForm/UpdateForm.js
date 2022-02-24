@@ -24,13 +24,16 @@ const UpdateForm = (props) => {
         confirmButtonText: "Yes",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch(`http://localhost:4000/student/updateInfo/${id}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(updatedValue),
-          })
+          fetch(
+            `https://powerful-river-71836.herokuapp.com/student/updateInfo/${id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(updatedValue),
+            }
+          )
             .then((res) => res.json())
             .then((data) => {
               if (data.modifiedCount > 0) {

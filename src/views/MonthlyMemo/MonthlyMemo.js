@@ -9,7 +9,7 @@ const MonthlyMemo = () => {
     console.log(allOrder);
 
     useEffect(() => {
-        fetch(`http://localhost:4000/mealDist/getMemo/${id}`)
+        fetch(`https://powerful-river-71836.herokuapp.com/mealDist/getMemo/${id}`)
             .then(res => res.json())
             .then(data => {
                 setAllOrder(data);
@@ -17,7 +17,7 @@ const MonthlyMemo = () => {
     },[]);
 
     useEffect(() => {
-        fetch(`http://localhost:4000/student/${id}`)
+        fetch(`https://powerful-river-71836.herokuapp.com/student/${id}`)
             .then(res => res.json())
             .then(data => setStudent(data))
     },[]);

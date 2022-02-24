@@ -8,7 +8,7 @@ const Update = () => {
 
   //load data
   useEffect(() => {
-    fetch(`http://localhost:4000/meal/${id}`)
+    fetch(`https://powerful-river-71836.herokuapp.com/meal/${id}`)
       .then((res) => res.json())
       .then((data) => setMeal(data));
   }, [id]);

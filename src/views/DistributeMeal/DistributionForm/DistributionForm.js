@@ -12,7 +12,7 @@ const DistributionForm = (props) => {
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/meal")
+    fetch("https://powerful-river-71836.herokuapp.com/meal")
       .then((res) => res.json())
       .then((data) => setMeals(data.payload));
   }, []);
@@ -36,12 +36,12 @@ const DistributionForm = (props) => {
         shift: shift,
         foodList: data.foodList,
       };
-
-      if (data.foodList.length > 2) {
+      console.log(data.foodList.length);
+      if (data.foodList.length >= 2) {
         setErrorM(0);
         if (student?.receive) {
           let Dshift = student.receive.shift;
-          const validator = Dshift.filter(m => m[data.shift]);
+          const validator = Dshift.filter((m) => m[data.shift]);
           console.log(validator);
           if (formateDate === student?.receive?.date && validator.length) {
             Swal.fire({
@@ -72,13 +72,16 @@ const DistributionForm = (props) => {
   };
 
   function saveMealRecipe(payload) {
-    fetch("http://localhost:4000/student/foodDistribution", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
+    fetch(
+      "https://powerful-river-71836.herokuapp.com/student/foodDistribution",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -231,9 +234,7 @@ const DistributionForm = (props) => {
                               {m.name}
                             </label>
                           </span>
-                          <span>
-                            {m.price}tk
-                          </span>
+                          <span>{m.price}tk</span>
                         </div>
                       </li>
                     ))}

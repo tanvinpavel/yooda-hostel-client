@@ -9,7 +9,7 @@ const StudentUpdate = () => {
 
   // load data
   useEffect(() => {
-    fetch(`http://localhost:4000/student/${id}`)
+    fetch(`https://powerful-river-71836.herokuapp.com/student/${id}`)
       .then((res) => res.json())
       .then((data) => {
         delete data.receive;

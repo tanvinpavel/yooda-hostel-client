@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const AddStudent = () => {
   const { register, handleSubmit, reset } = useForm();
   const formDataHandler = (data) => {
-    fetch("http://localhost:4000/student/addStudent", {
+    fetch("https://powerful-river-71836.herokuapp.com/student/addStudent", {
       method: "POST",
       headers: {
         "content-type": "application/json",
