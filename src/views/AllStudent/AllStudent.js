@@ -5,11 +5,13 @@ import Swal from "sweetalert2";
 
 const AllStudent = () => {
   const [student, setStudent] = useState([]);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [size, setSize] = useState(4);
   let [item, setItem] = useState(0);
+  const [action, setAction] = useState('');
+  const [reRender, setReRender] = useState(0);
   let count;
 
   useEffect(() => {
@@ -23,7 +25,48 @@ const AllStudent = () => {
         const totalPage = Math.ceil(count / size);
         setPageCount(totalPage);
       });
-  }, [currentPage, size]);
+  }, [currentPage, size, reRender]);
+
+  const bulkHandler = (data) => {
+    const payload = {...data, action}
+
+    if(item > 0){
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Update",
+      }).then((result) => {
+        if(result.isConfirmed) {
+          fetch("http://localhost:4000/student/updateStatus/action", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if(data.modifiedCount > 0){
+                setReRender(data.modifiedCount);
+                reset();
+                setItem(0);
+                Swal.fire("SUCCESS", "Update Successful!", "success");
+              }else{
+                reset();
+                setItem(0);
+                Swal.fire("Failed", "Update Failed!", "warning");
+              }
+            });
+        }
+      });
+    }else{
+      Swal.fire("Some Thing Wants Wrong", "No Item Selected!", "warning");
+    }
+  }
 
   const deleteHandler = (id) => {
     Swal.fire({
@@ -55,44 +98,6 @@ const AllStudent = () => {
     });
   };
 
-  const activeHandler = (data) => {
-    fetch(
-      "https://powerful-river-71836.herokuapp.com/student/updateStatus/active",
-      {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          window.location.reload();
-        }
-      });
-  };
-
-  const inActiveHandler = (data) => {
-    fetch(
-      "https://powerful-river-71836.herokuapp.com/student/updateStatus/inActive",
-      {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          window.location.reload();
-        }
-      });
-  };
-
   const counterFunction = (e) => {
     if (e.target.checked === true) {
       setItem(item + 1);
@@ -116,6 +121,7 @@ const AllStudent = () => {
         <div className="row justify-content-md-center">
           <div className="col-md-8">
             <h3 className="text-center mt-3">All Student Data</h3>
+
             <div className="d-flex justify-content-between">
               <div
                 className="btn-group"
@@ -134,18 +140,10 @@ const AllStudent = () => {
                   </button>
                   <ul className="dropdown-menu" aria-labelledby="btnGroupDrop2">
                     <li>
-                      <form onClick={handleSubmit(activeHandler)} id="form1">
-                        <button type="submit" className="dropdown-item">
-                          Active
-                        </button>
-                      </form>
+                      <button type="submit" form="form1" onClick={()=>{setAction('active')}} className="dropdown-item">Active</button>
                     </li>
                     <li>
-                      <form onClick={handleSubmit(inActiveHandler)} id="form1">
-                        <button type="submit" className="dropdown-item">
-                          Inactive
-                        </button>
-                      </form>
+                      <button type="submit" form="form1" onClick={()=>{setAction('inActive')}} className="dropdown-item">Inactive</button>
                     </li>
                   </ul>
                 </div>
@@ -187,6 +185,78 @@ const AllStudent = () => {
               {item > 0 && <div>{item} selected</div>}
             </div>
 
+            <table className="table table-dark table-hover mt-2 table-bordered text-center">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Roll</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Class</th>
+                  <th scope="col">Hall</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                  <th scope="col">Select</th>
+                </tr>
+              </thead>
+              <tbody>
+                {student.map((student, i) => (
+                  <tr key={student._id}>
+                    <th scope="row">{i + 1}</th>
+                    <td>
+                      <Link to={`/memo/${student._id}`}>{student.name}</Link>
+                    </td>
+                    <td>{student.roll}</td>
+                    <td>{student.age}</td>
+                    <td>{student.class}</td>
+                    <td>{student.hall}</td>
+                    <td>
+                      {student.status === "active" ? (
+                        <span className="px-2 py-1 rounded bg-success">
+                          Active
+                        </span>
+                      ) : (
+                        <span className="px-2 py-1 bg-danger rounded">
+                          Inactive
+                        </span>
+                      )}
+                    </td>
+                    <td>
+                      <NavLink
+                        to={`/student/update/${student._id}`}
+                        className="btn btn-sm btn-outline-primary me-2"
+                      >
+                        edit
+                      </NavLink>
+                      <button
+                        onClick={() => {
+                          deleteHandler(student._id);
+                        }}
+                        className="btn btn-sm btn-outline-danger"
+                      >
+                        delete
+                      </button>
+                    </td>
+                    <td>
+                    <form id="form1" onSubmit={handleSubmit(bulkHandler)}>
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          id="checkboxNoLabel"
+                          value={student._id}
+                          onClick={(e) => {
+                            counterFunction(e);
+                          }}
+                          {...register("statusIDList")}
+                        />
+                      </form>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* pagination */}
             <nav aria-label="Page navigation example">
               <ul className="pagination justify-content-end">
                 <li className="page-item">
@@ -232,76 +302,6 @@ const AllStudent = () => {
                 </li>
               </ul>
             </nav>
-
-            <table className="table table-dark table-hover mt-2 table-bordered text-center">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Roll</th>
-                  <th scope="col">Age</th>
-                  <th scope="col">Class</th>
-                  <th scope="col">Hall</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Select</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {student.map((student, i) => (
-                  <tr key={student._id}>
-                    <th scope="row">{i + 1}</th>
-                    <td>
-                      <Link to={`/memo/${student._id}`}>{student.name}</Link>
-                    </td>
-                    <td>{student.roll}</td>
-                    <td>{student.age}</td>
-                    <td>{student.class}</td>
-                    <td>{student.hall}</td>
-                    <td>
-                      {student.status === "active" ? (
-                        <span className="px-2 py-1 rounded bg-success">
-                          Active
-                        </span>
-                      ) : (
-                        <span className="px-2 py-1 bg-danger rounded">
-                          Inactive
-                        </span>
-                      )}
-                    </td>
-                    <td>
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="checkboxNoLabel"
-                        value={student._id}
-                        onClick={(e) => {
-                          counterFunction(e);
-                        }}
-                        {...register("status")}
-                        form="form1"
-                      />
-                    </td>
-                    <td>
-                      <NavLink
-                        to={`/student/update/${student._id}`}
-                        className="btn btn-sm btn-outline-primary me-2"
-                      >
-                        edit
-                      </NavLink>
-                      <button
-                        onClick={() => {
-                          deleteHandler(student._id);
-                        }}
-                        className="btn btn-sm btn-outline-danger"
-                      >
-                        delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
         </div>
       )}
