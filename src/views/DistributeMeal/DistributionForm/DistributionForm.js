@@ -18,6 +18,7 @@ const DistributionForm = (props) => {
   }, []);
 
   const formateDate = currentDate();
+  console.log(formateDate);
 
   const mealDistributeHandler = (data) => {
     if (student._id) {
@@ -42,7 +43,6 @@ const DistributionForm = (props) => {
         if (student?.receive) {
           let Dshift = student.receive.shift;
           const validator = Dshift.filter((m) => m[data.shift]);
-          console.log(validator);
           if (formateDate === student?.receive?.date && validator.length) {
             Swal.fire({
               icon: "error",

@@ -41,7 +41,7 @@ const AllStudent = () => {
         confirmButtonText: "Update",
       }).then((result) => {
         if(result.isConfirmed) {
-          fetch("http://localhost:4000/student/updateStatus/action", {
+          fetch("https://powerful-river-71836.herokuapp.com/student/updateStatus/action", {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",

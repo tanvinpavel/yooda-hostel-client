@@ -156,7 +156,7 @@ const AllMeal = () => {
               <div>{item > 0 && <small>{item} Selected</small>}</div>
             </div>
 
-            <table className="table table-dark table-hover mt-5 table-bordered text-center">
+            <table className="table table-dark table-hover mt-2 table-bordered text-center">
               <thead>
                 <tr>
                   <th scope="col"></th>
@@ -206,7 +206,7 @@ const AllMeal = () => {
             </table>
 
             <nav aria-label="Page navigation example">
-              <ul className="pagination">
+              <ul className="pagination justify-content-end">
                 <li className="page-item">
                   <button
                     onClick={() => {

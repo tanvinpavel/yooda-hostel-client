@@ -19,11 +19,9 @@ const getChangesValue = (newObj, oldObj) => {
 const currentDate = () => {
     let today = new Date();
     let year = today.getFullYear();
-    let month = today.getMonth()+1;
-    if(month.toString().length === 1){
-      month = '0'+month;
-    }
-    let currentDate = today.getDate();
+    let month = String(today.getMonth()+1).padStart(2,'0');
+    let currentDate = String(today.getDate()).padStart(2,'0');
+
     let formateDate = year+"-"+month+"-"+currentDate;
 
     return formateDate;
