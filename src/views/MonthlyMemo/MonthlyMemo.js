@@ -19,7 +19,6 @@ const MonthlyMemo = () => {
             .then(res => res.json())
             .then(data => {
                 let thisMonthData = data.filter(order => Number(order.date.split('-')[1]) === currentMonth);
-                console.log(thisMonthData);
                 setNoData(thisMonthData.length);
                 setAllOrder(thisMonthData);
             })

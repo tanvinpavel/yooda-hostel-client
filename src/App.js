@@ -9,6 +9,9 @@ import AllStudent from './views/AllStudent/AllStudent';
 import StudentUpdate from './views/StudentUpdate/StudentUpdate';
 import DistributeMeal from './views/DistributeMeal/DistributeMeal';
 import MonthlyMemo from "./views/MonthlyMemo/MonthlyMemo";
+import Search from "./views/Search/Search";
+import Login from "./views/Login/Login";
+import Signup from "./views/Signup/Signup";
 
 function App() {
   return (
@@ -22,9 +25,12 @@ function App() {
         <Route path="/update/:id" element={<Update/>} />
         <Route path="/addStudent" element={<AddStudent/>} />
         <Route path="/allStudent" element={<AllStudent/>} />
+        <Route path="/search" element={<Search/>} />
         <Route path="/student/update/:id" element={<StudentUpdate/>} />
         <Route path="/distributeMeal" element={<DistributeMeal/>} />
         <Route path="/memo/:id" element={<MonthlyMemo/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/signup" element={<Signup/>} />
       </Routes>
     </>
   );

@@ -21,11 +21,14 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav  ms-auto">
               <NavLink to="/home" className={(navInfo) => navInfo.isActive ? 'nav-link active' : 'nav-link'}>Home</NavLink>
+              <NavLink to="/search" className={(navInfo) => navInfo.isActive ? 'nav-link active' : 'nav-link'}>Search</NavLink>
               <NavLink to="/distributeMeal" className={(navInfo) => navInfo.isActive ? 'nav-link active' : 'nav-link'}>Distribute Meal</NavLink>
               <NavLink to="/addMeal" className={(navInfo) => navInfo.isActive ? 'nav-link active' : 'nav-link'}>Add Meal</NavLink>
               <NavLink to="/allMeal" className={(navInfo) => navInfo.isActive ? 'nav-link active' : 'nav-link'}>All Meal</NavLink>
               <NavLink to="/addStudent" className={(navInfo) => navInfo.isActive ? 'nav-link active' : 'nav-link'}>Add Student</NavLink>
               <NavLink to="/allStudent" className={(navInfo) => navInfo.isActive ? 'nav-link active' : 'nav-link'}>All Student</NavLink>
+              <NavLink to='/login' className={(navInfo) => navInfo.isActive ? 'nav-link active' : 'nav-link'}>Login</NavLink>
+              <NavLink to="/signup" className={(navInfo) => navInfo.isActive ? 'nav-link active' : 'nav-link'}>Sign Up</NavLink>
             </div>
           </div>
         </div>

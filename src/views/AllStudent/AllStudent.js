@@ -10,9 +10,8 @@ const AllStudent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [size, setSize] = useState(4);
   let [item, setItem] = useState(0);
-  const [action, setAction] = useState('');
+  const [action, setAction] = useState("");
   const [reRender, setReRender] = useState(0);
-  let count;
 
   useEffect(() => {
     fetch(
@@ -28,9 +27,9 @@ const AllStudent = () => {
   }, [currentPage, size, reRender]);
 
   const bulkHandler = (data) => {
-    const payload = {...data, action}
+    const payload = { ...data, action };
 
-    if(item > 0){
+    if (item > 0) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -40,22 +39,25 @@ const AllStudent = () => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Update",
       }).then((result) => {
-        if(result.isConfirmed) {
-          fetch("https://powerful-river-71836.herokuapp.com/student/updateStatus/action", {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          })
+        if (result.isConfirmed) {
+          fetch(
+            "https://powerful-river-71836.herokuapp.com/student/updateStatus/action",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(payload),
+            }
+          )
             .then((res) => res.json())
             .then((data) => {
-              if(data.modifiedCount > 0){
+              if (data.modifiedCount > 0) {
                 setReRender(data.modifiedCount);
                 reset();
                 setItem(0);
                 Swal.fire("SUCCESS", "Update Successful!", "success");
-              }else{
+              } else {
                 reset();
                 setItem(0);
                 Swal.fire("Failed", "Update Failed!", "warning");
@@ -63,10 +65,10 @@ const AllStudent = () => {
             });
         }
       });
-    }else{
+    } else {
       Swal.fire("Some Thing Wants Wrong", "No Item Selected!", "warning");
     }
-  }
+  };
 
   const deleteHandler = (id) => {
     Swal.fire({
@@ -140,10 +142,28 @@ const AllStudent = () => {
                   </button>
                   <ul className="dropdown-menu" aria-labelledby="btnGroupDrop2">
                     <li>
-                      <button type="submit" form="form1" onClick={()=>{setAction('active')}} className="dropdown-item">Active</button>
+                      <button
+                        type="submit"
+                        form="form1"
+                        onClick={() => {
+                          setAction("active");
+                        }}
+                        className="dropdown-item"
+                      >
+                        Active
+                      </button>
                     </li>
                     <li>
-                      <button type="submit" form="form1" onClick={()=>{setAction('inActive')}} className="dropdown-item">Inactive</button>
+                      <button
+                        type="submit"
+                        form="form1"
+                        onClick={() => {
+                          setAction("inActive");
+                        }}
+                        className="dropdown-item"
+                      >
+                        Inactive
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -238,7 +258,7 @@ const AllStudent = () => {
                       </button>
                     </td>
                     <td>
-                    <form id="form1" onSubmit={handleSubmit(bulkHandler)}>
+                      <form id="form1" onSubmit={handleSubmit(bulkHandler)}>
                         <input
                           className="form-check-input"
                           type="checkbox"

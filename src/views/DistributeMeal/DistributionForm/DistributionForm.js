@@ -18,7 +18,6 @@ const DistributionForm = (props) => {
   }, []);
 
   const formateDate = currentDate();
-  console.log(formateDate);
 
   const mealDistributeHandler = (data) => {
     if (student._id) {
