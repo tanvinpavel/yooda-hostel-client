@@ -2,20 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { currentDate } from "../../../utility";
 import "./distributionForm.css";
+import useInterceptor from "../../../hooks/useInterceptor";
+import axios from "../../../api/axios";
+import useAuthContext from "../../../hooks/useAuthContext";
+
 const Swal = require("sweetalert2");
 
 const DistributionForm = (props) => {
   const { student, setStudent } = props;
-
+  
   const { register, handleSubmit, reset } = useForm();
-  const [errorM, setErrorM] = useState(0);
+  const [errorM, setErrorM] = useState(false);
   const [meals, setMeals] = useState([]);
+  const axiosPrivate = useInterceptor();
+  const {user} = useAuthContext();
 
   useEffect(() => {
-    fetch("https://powerful-river-71836.herokuapp.com/meal")
-      .then((res) => res.json())
-      .then((data) => setMeals(data.payload));
-  }, []);
+    axios.get('/meal')
+     .then(res => setMeals(res.data.payload))
+     .catch(error => console.log(error))
+  }, [axiosPrivate]);
 
   const formateDate = currentDate();
 
@@ -29,37 +35,36 @@ const DistributionForm = (props) => {
       if (data.shift === "night") {
         shift.night = true;
       }
-      // if(data.foodList)
-      const uData = {
-        s_id,
-        date: formateDate,
-        shift: shift,
-        foodList: data.foodList,
-      };
-      console.log(data.foodList.length);
       if (data.foodList.length >= 2) {
-        setErrorM(0);
+        setErrorM(false);
+        const uData = {
+          s_id,
+          date: formateDate,
+          shift: shift,
+          foodList: data.foodList,
+        };
         if (student?.receive) {
           let Dshift = student.receive.shift;
           const validator = Dshift.filter((m) => m[data.shift]);
           if (formateDate === student?.receive?.date && validator.length) {
+            reset({foodList: null});
             Swal.fire({
               icon: "error",
               title: "Oops...",
               text: "Already served!",
             });
           } else {
-            reset();
+            reset({foodList: null});
             setStudent({});
             saveMealRecipe(uData);
           }
         } else {
-          reset();
+          reset({foodList: null});
           setStudent({});
           saveMealRecipe(uData);
         }
       } else {
-        setErrorM(1);
+        setErrorM(true);
       }
     } else {
       Swal.fire({
@@ -71,23 +76,14 @@ const DistributionForm = (props) => {
   };
 
   function saveMealRecipe(payload) {
-    fetch(
-      "https://powerful-river-71836.herokuapp.com/student/foodDistribution",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    )
-      .then((res) => res.json())
+    axiosPrivate.post("/student/foodDistribution", payload)
       .then((data) => {
         console.log(data);
         if (Object.keys(data).length > 0) {
           Swal.fire("Success!", "Meal Served!", "success");
         }
-      });
+      })
+      .catch(error => console.log(error))
   }
 
   return (
@@ -184,7 +180,7 @@ const DistributionForm = (props) => {
                     />
                   )}
               </div>
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className={ user?.accessToken ? "btn btn-primary" : "btn btn-primary disabled"}>
                 Submit
               </button>
             </form>
@@ -221,11 +217,7 @@ const DistributionForm = (props) => {
                       >
                         <div className="form-check d-flex justify-content-between">
                           <span>
-                            <input
-                              className="form-check-input"
-                              {...register("foodList")}
-                              value={m._id}
-                              type="checkbox"
+                            <input className="form-check-input" {...register("foodList")} value={m._id} type="checkbox"
                               id={m._id}
                               required
                             />

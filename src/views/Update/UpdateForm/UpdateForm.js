@@ -1,33 +1,27 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useInterceptor from "../../../hooks/useInterceptor";
 import { getChangesValue } from "../../../utility";
 
 const UpdateForm = ({ meal }) => {
   const { register, handleSubmit } = useForm({
     defaultValues: meal,
   });
+  const axiosPrivate = useInterceptor();
 
   //update
   const editDataHandler = (formData) => {
     const updatedData = getChangesValue(formData, meal);
     if (Object.keys(updatedData).length !== 0) {
-      fetch(
-        `https://powerful-river-71836.herokuapp.com/meal/update/${meal._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedData),
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.modifiedCount > 0) {
+
+      axiosPrivate.put(`/meal/update/${meal._id}`, updatedData)
+        .then((res) => {
+          if (res.data.modifiedCount > 0) {
             Swal.fire("Success!", "Update successful!", "success");
           }
-        });
+        })
+        .catch(err => console.log(err));
     } else {
       Swal.fire({
         icon: "error",

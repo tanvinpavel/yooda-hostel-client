@@ -1,115 +1,73 @@
-import React from "react";
-import {useForm} from "react-hook-form"
-import axios from "../../api/axios";
+import {useState} from 'react';
+import InputField from '../InputField/InputField';
+import axios from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
+import useAuthContext from '../../hooks/useAuthContext';
 
 const Login = () => {
 
-    const {handleSubmit, register} = useForm();
+  const [values, setValues] = useState({
+    email: '',
+    pass: ''
+  });
+  const navigate = useNavigate();
+  const {setUser} = useAuthContext();
 
-    const formDataHandler = (data) => {
-        axios.post('/auth/login', data)
-            .then(data => console.log(data))
-            .catch( error => console.log(error))
+  const inputs = [
+    {
+      id: 1,
+      name: 'email',
+      label: 'Email',
+      type: 'email',
+      placeholder: 'Email',
+      required: true,
+      errorMessage: 'Email required'
+    },
+    {
+      id: 2,
+      name: 'pass',
+      label: 'Password',
+      type: 'password',
+      placeholder: 'Password',
+      required: true,
+      errorMessage: 'Password required',
     }
+  ];
+
+  const formHandler = async (e) => {
+    try {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const payload = Object.fromEntries(formData.entries());
+
+      const response = await axios.post('/auth/login', payload, {
+        headers: {'Content-Type': 'application/json'},
+        withCredentials: true
+      });
+
+      if(response.data.accessToken){
+        setUser(response.data);
+        localStorage.setItem('isLoggedIn', JSON.stringify(response.data));
+        navigate('/home');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const onChange = (e) => {
+    setValues({...values, [e.target.name]: e.target.value})
+  }
 
   return (
-    <div className="container-fluid">
-      <div className="row justify-content-center">
-        <div className="col-md-8 col-sm-10">
-          <div className="card mt-5 border-0 shadow" style={{ background: "#f2f2f2" }}>
-            <div className="card-body">
-              <h4 className="card-title mb-3 text-center">Signup</h4>
-              <form method="post" onSubmit={handleSubmit(formDataHandler)}>
-                <div className="mb-3">
-                  <label
-                    htmlFor="inputName1"
-                    className="form-label"
-                  >
-                    Username
-                  </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputName1"
-                      {...register("name")}
-                      placeholder="Student Name"
-                      required
-                    />
-                </div>
-                <div className="mb-3">
-                  <label
-                    htmlFor="inputRoll2"
-                    className="form-label"
-                  >
-                    Email
-                  </label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="inputRoll2"
-                      {...register("email")}
-                      placeholder="Email"
-                      required
-                    />
-                </div>
-                <div className="mb-3">
-                  <label
-                    htmlFor="inputRoll22"
-                    className="form-label"
-                  >
-                    Roll
-                  </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputRoll22"
-                      {...register("roll")}
-                      placeholder="Roll"
-                      required
-                    />
-                </div>
-                <div className="row mb-3">
-                    <div className="col">
-                    <label
-                        htmlFor="inputPass22"
-                        className="form-label"
-                    >
-                        Password
-                    </label>
-                        <input
-                        type="password"
-                        className="form-control"
-                        id="inputRePass44"
-                        {...register("pass")}
-                        placeholder="Password"
-                        required
-                        />
-                    </div>
-                    <div className="col">
-                    <label
-                        htmlFor="inputRePass44"
-                        className="form-label"
-                    >
-                        Re-enter Password
-                    </label>
-                        <input
-                        type="password"
-                        className="form-control"
-                        id="inputPass22"
-                        {...register("rePass")}
-                        placeholder="Reenter password"
-                        required
-                        />
-                    </div>
-                </div>
-                <button type="submit" className="btn btn-primary">
-                  Signup
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="object-center">
+      <form onSubmit={formHandler}>
+        <h4>Login</h4>
+        {
+          inputs.map(input => <InputField key={input.id} onChange={onChange} data={input} />)
+        }
+        <button>Login</button>
+      </form>
     </div>
   );
 };

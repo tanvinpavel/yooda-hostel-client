@@ -1,24 +1,20 @@
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useInterceptor from "../../hooks/useInterceptor";
 
 const AddMeal = () => {
   const { register, handleSubmit, reset } = useForm();
-  const formDataHandler = (data) => {
-    console.log(data);
-    fetch("https://powerful-river-71836.herokuapp.com/meal/addMeal", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((req) => req.json())
+  const axiosPrivate = useInterceptor();
+
+  const formDataHandler = (payload) => {
+    axiosPrivate.post("http://localhost:5050/meal/addMeal", payload)
       .then((mess) => {
         if (mess) {
           Swal.fire("Success!", "New meal added successfully!", "success");
           reset();
         }
-      });
+      })
+      .catch(err => console.log(err))
   };
 
   return (

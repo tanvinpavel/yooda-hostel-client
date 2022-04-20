@@ -5,16 +5,17 @@ import Swal from "sweetalert2";
 const AddStudent = () => {
   const { register, handleSubmit, reset } = useForm();
   const formDataHandler = (data) => {
-    fetch("https://powerful-river-71836.herokuapp.com/student/addStudent", {
+    fetch("http://localhost:5050/student/addStudent", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     })
-      .then((req) => req.json())
+      .then((res) => res.json())
       .then((mess) => {
         if (mess) {
+          console.log(mess);
           Swal.fire("Success!", "New meal added successfully!", "success");
           reset();
         }

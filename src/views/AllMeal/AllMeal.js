@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
+import useInterceptor from "../../hooks/useInterceptor";
 
 const AllMeal = () => {
   const [meals, setMeals] = useState([]);
@@ -10,18 +11,17 @@ const AllMeal = () => {
   const [limit, setLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(0);
+  const axiosPrivate = useInterceptor();
 
   useEffect(() => {
-    fetch(
-      `https://powerful-river-71836.herokuapp.com/meal?limit=${limit}&&page=${currentPage}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        const totalPage = Math.ceil(data.count / limit);
-        setPageSize(totalPage);
-        setMeals(data.payload);
-      });
-  }, [currentPage, limit]);
+    axiosPrivate.get(`/meal?limit=${limit}&&page=${currentPage}`)
+      .then(res => {
+          const totalPage = Math.ceil(res.count / limit);
+          setPageSize(totalPage);
+          setMeals(res.data.payload);
+      })
+      .catch(error => console.log(error))
+  }, [axiosPrivate, currentPage, limit]);
 
   const deleteHandler = (id) => {
     Swal.fire({
@@ -34,51 +34,45 @@ const AllMeal = () => {
       confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://powerful-river-71836.herokuapp.com/meal/delete/${id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
+        axiosPrivate.delete(`/meal/delete/${id}`)
+          .then((res) => {
+            if (res.data.deletedCount > 0) {
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
-
+              
               const lestItem = meals.filter((meal) => meal._id !== id);
               setMeals(lestItem);
             }
-          });
+          })
+          .catch(error => console.log(error))
       }
     });
   };
 
   const bulkHandler = (IDs) => {
     if (item > 0) {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Delete",
-      }).then((result) => {
+      Swal
+       .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Delete",
+        })
+       .then((result) => {
         if (result.isConfirmed) {
-          fetch("https://powerful-river-71836.herokuapp.com/meal/deleteMany", {
-            method: "delete",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(IDs),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.deletedCount > 0) {
+          axiosPrivate.delete("/meal/deleteMany", { data: IDs})
+            .then((res) => {
+              if (res.data.deletedCount > 0) {
                 const restMeal = meals.filter(
                   (e) => IDs.item.indexOf(e._id) < 0
                 );
                 setMeals(restMeal);
                 Swal.fire("Success", "Delete Successfully", "success");
               }
-            });
+            })
+            .catch(err=>console.log(err))
         }
       });
     } else {

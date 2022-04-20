@@ -12,27 +12,34 @@ import MonthlyMemo from "./views/MonthlyMemo/MonthlyMemo";
 import Search from "./views/Search/Search";
 import Login from "./views/Login/Login";
 import Signup from "./views/Signup/Signup";
+import PrivateRoute from "./views/PrivateRoute/PrivateRoute";
+import Layout from "./views/Layout/Layout";
 
 function App() {
   return (
-    <>
-      <Header/>
       <Routes>
-        <Route path="/" element={<Navigate to="/home"/>}/>
-        <Route path="/home" element={<Home/>} />
-        <Route path="/addMeal" element={<AddMeal/>} />
-        <Route path="/allMeal" element={<AllMeal/>} />
-        <Route path="/update/:id" element={<Update/>} />
-        <Route path="/addStudent" element={<AddStudent/>} />
-        <Route path="/allStudent" element={<AllStudent/>} />
-        <Route path="/search" element={<Search/>} />
-        <Route path="/student/update/:id" element={<StudentUpdate/>} />
-        <Route path="/distributeMeal" element={<DistributeMeal/>} />
-        <Route path="/memo/:id" element={<MonthlyMemo/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<Signup/>} />
+        <Route path="/" element={<Layout/>}>
+          {/* public route */}
+          <Route path="/" element={<Home/>} />
+          <Route path="/home" element={<Navigate to="/" />} />
+
+          <Route path="/search" element={<Search/>} />
+          <Route path="/distributeMeal" element={<DistributeMeal/>} />
+          <Route path="/memo/:id" element={<MonthlyMemo/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/signup" element={<Signup/>} />
+
+          {/* private route */}
+          <Route element={<PrivateRoute/>}>
+            <Route path="/addMeal" element={<AddMeal/>} />
+            <Route path="/allMeal" element={<AllMeal/>} />
+            <Route path="/update/:id" element={<Update/>} />
+            <Route path="/allStudent" element={<AllStudent/>} />
+            <Route path="/student/update/:id" element={<StudentUpdate/>} />
+            <Route path="/addStudent" element={<AddStudent/>} />
+          </Route>
+        </Route>
       </Routes>
-    </>
   );
 }
 

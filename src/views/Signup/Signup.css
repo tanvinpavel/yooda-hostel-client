@@ -1,40 +1,54 @@
-.instructions {
-    font-size: 0.75rem;
-    border-radius: 0.5rem;
-    background: #000;
-    color: #fff;
-    padding: 0.25rem;
-    position: relative;
-    bottom: -10px;
+.object-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 56px);
 }
 
-.instructions > svg {
-    margin-right: 0.25rem;
+.object-center form {
+  padding: 50px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  box-shadow: 10px 10px 16px #c6c6c6;
 }
 
-.offscreen {
-    position: absolute;
-    left: -9999px;
+.object-center form input {
+  margin: 5px 0;
+  width: 250px;
+  border: 1px solid #e4e4e4;
+  padding: 8px 10px;
+  font-size: 16px;
 }
 
-.hide {
-    display: none;
+.object-center form button {
+  border: none;
+  background-color: blueviolet;
+  color: white;
+  padding: 5px 10px;
+  margin: 4px 0;
+  font-weight: 500;
+  border-radius: 3px;
+  width: 100%;
 }
 
-.valid {
-    color: limegreen;
-    margin-left: 0.25rem;
+.form-style {
+  display: flex;
+  flex-direction: column;
 }
 
-.invalid {
-    color: red;
-    margin-left: 0.25rem;
+.form-style span {
+  width: 250px;
+  font-size: 12px;
+  color: red;
+  margin-bottom: 3px;
+  display: none;
 }
 
-.errmsg {
-    background-color: lightpink;
-    color: firebrick;
-    font-weight: bold;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
+.form-style input:invalid[focused="true"] + span {
+  display: block;
+}
+
+.form-style input:invalid[focused="true"] {
+  border: 1px solid red;
+  border-radius: 5px;
 }

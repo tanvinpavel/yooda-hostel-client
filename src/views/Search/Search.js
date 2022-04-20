@@ -8,7 +8,7 @@ const [query, setQuery] = useState(/^[a-zA-Z0-9)]/i);
 const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    fetch("https://powerful-river-71836.herokuapp.com/student")
+    fetch("http://localhost:5050/student")
       .then((res) => res.json())
       .then((data) => setStudents(data.student));
   }, []);
@@ -20,19 +20,27 @@ const [notFound, setNotFound] = useState(false);
   }
 
   const formHandler = (e) => {
-    e.preventDefault();
-    setNotFound(false);
+      e.preventDefault();
+      setNotFound(false);
 
-    const formData = new FormData(e.target);
-    const value = Object.fromEntries(formData.entries());
-    const {searchValue} = value;
+      const formData = new FormData(e.target);
+      const value = Object.fromEntries(formData.entries());
+      const {searchValue} = value;
+      const payload = {name: searchValue, roll: searchValue}
+      console.log(payload);
 
-    const filterData = students.filter(student => student.name.toLowerCase().includes(searchValue));
-    if(filterData.length > 0){
-        setStudents(filterData);
-    }else{
-        setNotFound(true);
-    }
+      fetch(
+        "http://localhost:5050/student/searchStudent",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => setStudents([data]));
   }
 
   return (
@@ -75,14 +83,20 @@ const [notFound, setNotFound] = useState(false);
                 </thead>
                 {
                     students.length !== 0 ? 
-                        students.filter(student => query.test(student.name)).map((student, i) => 
+                    students.filter(student => query.test(student.name) || query.test(student.roll)).map((student, i) => 
                         <tbody key={student._id}>
                             <tr className="text-center">
                                 <td>{++i}</td>
                                 <td>{<Link to={`/memo/${student._id}`}>{student.name}</Link>}</td>
                                 <td>{student.roll}</td>
                                 <td>{student.hall}</td>
-                                <td>{student.status}</td>
+                                <td>{
+                                student.status === 'active'
+                                ? 
+                                  <span className="active-status">Active</span>
+                                : 
+                                  <span className='inactive-status'>Inactive</span> 
+                                }</td>
                             </tr>
                         </tbody>)
                      : 

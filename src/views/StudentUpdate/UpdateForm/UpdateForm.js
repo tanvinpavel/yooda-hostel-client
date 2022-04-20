@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useInterceptor from "../../../hooks/useInterceptor";
 import { getChangesValue } from "../../../utility";
 
 const UpdateForm = (props) => {
@@ -9,6 +10,7 @@ const UpdateForm = (props) => {
   const { register, handleSubmit } = useForm({
     defaultValues: data,
   });
+  const axiosPrivate = useInterceptor();
 
   const formDataHandler = (formData) => {
     const updatedValue = getChangesValue(formData, data);
@@ -24,22 +26,13 @@ const UpdateForm = (props) => {
         confirmButtonText: "Yes",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch(
-            `https://powerful-river-71836.herokuapp.com/student/updateInfo/${id}`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(updatedValue),
-            }
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.modifiedCount > 0) {
+          axiosPrivate.put(`/student/updateInfo/${id}`, updatedValue)
+            .then((res) => {
+              if (res.data.modifiedCount > 0) {
                 Swal.fire("Success!", "Update successful!", "success");
               }
-            });
+            })
+            .catch(err => console.log(err));
         }
       });
     } else {

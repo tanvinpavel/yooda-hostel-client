@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from '../../api/axios';
 import { currentDate } from '../../utility';
 import MemoTable from './MemoTable/MemoTable';
 import './MonthlyMemo.css';
@@ -15,21 +16,21 @@ const MonthlyMemo = () => {
     const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
     useEffect(() => {
-        fetch(`https://powerful-river-71836.herokuapp.com/mealDist/getMemo/${id}`)
-            .then(res => res.json())
-            .then(data => {
-                let thisMonthData = data.filter(order => Number(order.date.split('-')[1]) === currentMonth);
+        axios.get(`/mealDist/getMemo/${id}`)
+            .then(res => {
+                let thisMonthData = res.data.filter(order => Number(order.date.split('-')[1]) === currentMonth);
                 setNoData(thisMonthData.length);
                 setAllOrder(thisMonthData);
             })
-    },[currentMonth]);
+            .catch(err => console.log(err))
+    },[currentMonth, id]);
 
 
     useEffect(() => {
-        fetch(`https://powerful-river-71836.herokuapp.com/student/${id}`)
-            .then(res => res.json())
-            .then(data => setStudent(data))
-    },[]);
+        axios.get(`/student/${id}`)
+            .then(res => setStudent(res.data))
+            .catch(err => console.log(err))
+    },[id]);
 
     return (
         <div className='container'>

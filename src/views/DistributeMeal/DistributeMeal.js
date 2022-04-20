@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "../../api/axios";
 import DistributionForm from "./DistributionForm/DistributionForm";
 const Swal = require("sweetalert2");
 
@@ -7,22 +8,14 @@ const DistributeMeal = () => {
   const { register, handleSubmit } = useForm();
   const [student, setStudent] = useState({});
 
-  const searchStudent = (data) => {
-    if (data.roll.length > 0) {
-      fetch(
-        "https://powerful-river-71836.herokuapp.com/student/searchStudent",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data) {
-            setStudent(data);
+  const searchStudent = (input) => {
+    if (input.roll.length > 0) {
+      const {roll} = input;
+      const payload = {name: roll, roll: roll}
+      axios.post("/student/searchStudent", payload)
+        .then((res) => {
+          if (res.data) {
+            setStudent(res.data);
           } else {
             Swal.fire({
               icon: "warning",
@@ -30,7 +23,8 @@ const DistributeMeal = () => {
               text: "Student not registered",
             });
           }
-        });
+        })
+        .catch(error => console.log(error));
     } else {
       Swal.fire({
         icon: "error",
@@ -57,7 +51,7 @@ const DistributeMeal = () => {
                       type="text"
                       className="form-control"
                       {...register("roll")}
-                      placeholder="enter student roll"
+                      placeholder="Search student by roll or name"
                     />
                     <button
                       className="btn btn-outline-secondary"

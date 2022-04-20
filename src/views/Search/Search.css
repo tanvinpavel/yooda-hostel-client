@@ -57,6 +57,22 @@ table{
     color: #73aaff;
 }
 
+.active-status{
+    color: #11b411;
+    font-size: 12px;
+    padding: 2px 10px;
+    background: #bcffbc;
+    border-radius: 25px;
+}
+
+.inactive-status{
+    color: #d21717;
+    font-size: 12px;
+    padding: 2px 10px;
+    background: #ffcdcd;
+    border-radius: 25px;
+}
+
 /* footer section */
 /* .footer-section{
     background-color: rgb(255 239 239 / 20%);

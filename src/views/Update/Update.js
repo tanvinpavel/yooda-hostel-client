@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useInterceptor from "../../hooks/useInterceptor";
 import UpdateForm from "./UpdateForm/UpdateForm";
 
 const Update = () => {
   const [meal, setMeal] = useState(null);
   const { id } = useParams();
+  const axiosPrivate = useInterceptor();
 
   //load data
   useEffect(() => {
-    fetch(`https://powerful-river-71836.herokuapp.com/meal/${id}`)
-      .then((res) => res.json())
-      .then((data) => setMeal(data));
-  }, [id]);
+    axiosPrivate.get(`/meal/${id}`)
+      .then((res) => setMeal(res.data))
+      .catch(err => console.log(err));
+  }, [axiosPrivate, id]);
 
   return (
     <div className="container">

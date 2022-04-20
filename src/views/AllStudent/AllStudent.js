@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
+import useInterceptor from "../../hooks/useInterceptor";
+
 
 const AllStudent = () => {
   const [student, setStudent] = useState([]);
@@ -12,19 +14,18 @@ const AllStudent = () => {
   let [item, setItem] = useState(0);
   const [action, setAction] = useState("");
   const [reRender, setReRender] = useState(0);
+  const axiosPrivate = useInterceptor();
 
   useEffect(() => {
-    fetch(
-      `https://powerful-river-71836.herokuapp.com/student?page=${currentPage}&&size=${size}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setStudent(data.student);
-        const count = data.count;
+    axiosPrivate.get(`/student?page=${currentPage}&&size=${size}`)
+      .then((res) => {
+        setStudent(res.data.student);
+        const count = res.data.count;
         const totalPage = Math.ceil(count / size);
         setPageCount(totalPage);
-      });
-  }, [currentPage, size, reRender]);
+      })
+      .catch(err => console.log(err));
+  }, [currentPage, size, reRender, axiosPrivate]);
 
   const bulkHandler = (data) => {
     const payload = { ...data, action };
@@ -40,20 +41,10 @@ const AllStudent = () => {
         confirmButtonText: "Update",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch(
-            "https://powerful-river-71836.herokuapp.com/student/updateStatus/action",
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payload),
-            }
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.modifiedCount > 0) {
-                setReRender(data.modifiedCount);
+          axiosPrivate.put("/student/updateStatus/action", payload)
+            .then((res) => {
+              if (res.data.modifiedCount > 0) {
+                setReRender(res.data.modifiedCount);
                 reset();
                 setItem(0);
                 Swal.fire("SUCCESS", "Update Successful!", "success");
@@ -62,7 +53,8 @@ const AllStudent = () => {
                 setItem(0);
                 Swal.fire("Failed", "Update Failed!", "warning");
               }
-            });
+            })
+            .catch(err => console.log(err));
         }
       });
     } else {
@@ -81,21 +73,16 @@ const AllStudent = () => {
       confirmButtonText: "Delete",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://powerful-river-71836.herokuapp.com/student/deleteStudent/${id}`,
-          {
-            method: "DELETE",
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount === 1) {
+        axiosPrivate.delete(`/student/deleteStudent/${id}`)
+          .then((res) => {
+            if (res.data.deletedCount === 1) {
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
 
               const lestItem = student.filter((s) => s._id !== id);
               setStudent(lestItem);
             }
-          });
+          })
+          .catch(err => console.log(err));
       }
     });
   };
