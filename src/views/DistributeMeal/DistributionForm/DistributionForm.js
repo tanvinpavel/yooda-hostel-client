@@ -78,7 +78,6 @@ const DistributionForm = (props) => {
   function saveMealRecipe(payload) {
     axiosPrivate.post("/student/foodDistribution", payload)
       .then((data) => {
-        console.log(data);
         if (Object.keys(data).length > 0) {
           Swal.fire("Success!", "Meal Served!", "success");
         }

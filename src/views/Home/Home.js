@@ -4,7 +4,6 @@ import useAuthContext from '../../hooks/useAuthContext';
 const Home = () => {
     const {user} = useAuthContext();
     
-    // console.log(localStorage.getItem('hello'));
     return (
         <div className="container">
             <div className="row mt-5 justify-content-md-center">

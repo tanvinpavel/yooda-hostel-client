@@ -27,7 +27,6 @@ const [notFound, setNotFound] = useState(false);
       const value = Object.fromEntries(formData.entries());
       const {searchValue} = value;
       const payload = {name: searchValue, roll: searchValue}
-      console.log(payload);
 
       fetch(
         "http://localhost:5050/student/searchStudent",

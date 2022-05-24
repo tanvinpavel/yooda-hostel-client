@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
+import useAuthContext from "../../hooks/useAuthContext";
 import InputField from "../InputField/InputField";
 import './Signup.css';
 
@@ -10,6 +12,9 @@ const Signup = () => {
     pass: '',
     confirmPass: ''
   });
+  const navigate = useNavigate();
+  const {setUser} = useAuthContext();
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const inputs = [
     {
@@ -19,7 +24,7 @@ const Signup = () => {
       type: 'text',
       placeholder: 'Name',
       required: true,
-      pattern: '[a-zA-Z0-9]{3,25}',
+      pattern: '[a-zA-Z0-9 ]{3,25}',
       errorMessage: "Username should be 3-16 characters and should't include any special character!"
     },
     {
@@ -60,12 +65,21 @@ const Signup = () => {
       const payload = Object.fromEntries(formData.entries());
       
       const response = await axios.post('/auth/signup', payload, {
-        headers: {'Content-Type': 'application/json'}
+        headers: {'Content-Type': 'application/json'},
+        withCredentials: true
       });
 
-      console.log(response);
+      if(response.data.accessToken){
+        setUser(response.data);
+        localStorage.setItem('isLoggedIn', JSON.stringify(response.data));
+        navigate('/home', {replace: true});
+      }
     } catch (error) {
-      console.log(error);
+      if(error.response.status === 403){
+        setErrorMessage(error.response.data);
+      }else{
+        setErrorMessage(error.response.data);
+      }
     }
     
   }
@@ -77,6 +91,7 @@ const Signup = () => {
   return (
     <div className="object-center">
       <form onSubmit={formHandler}>
+        { errorMessage && <p className="text-danger text-center">{errorMessage}</p> }
         <h4>Signup</h4>
         {
           inputs.map(input => <InputField key={input.id} data={input} onChange={onChange} />)

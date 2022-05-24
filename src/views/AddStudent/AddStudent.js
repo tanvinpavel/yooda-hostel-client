@@ -15,7 +15,6 @@ const AddStudent = () => {
       .then((res) => res.json())
       .then((mess) => {
         if (mess) {
-          console.log(mess);
           Swal.fire("Success!", "New meal added successfully!", "success");
           reset();
         }
@@ -26,36 +25,33 @@ const AddStudent = () => {
     <div className="container">
       <div className="row justify-content-md-center">
         <div className="col-md-6">
-          <div className="card mt-5 border-0" style={{ background: "#f2f2f2" }}>
-            <div className="card-body">
+          <div className="card shadow my-5 border-0" style={{ background: "#f2f2f2" }}>
+            <div className="card-body mt-4 mx-4">
               <h5 className="card-title mb-5">Add A New Student</h5>
               <form method="post" onSubmit={handleSubmit(formDataHandler)}>
-                <div className="row mb-3">
+                <div className="mb-3">
                   <label
                     htmlFor="inputName1"
-                    className="col-sm-2 col-form-label"
+                    className="form-label"
                   >
-                    Student Name
+                    Student Name:
                   </label>
-                  <div className="col-sm-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputName1"
-                      {...register("name")}
-                      placeholder="Student Name"
-                      required
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputName1"
+                    {...register("name")}
+                    placeholder="Student Name"
+                    required
+                  />
                 </div>
-                <div className="row mb-3">
+                <div className="mb-3">
                   <label
                     htmlFor="inputRoll2"
-                    className="col-sm-2 col-form-label"
+                    className="form-label"
                   >
                     Roll
                   </label>
-                  <div className="col-sm-10">
                     <input
                       type="text"
                       className="form-control"
@@ -64,43 +60,37 @@ const AddStudent = () => {
                       placeholder="Roll"
                       required
                     />
-                  </div>
                 </div>
-                <div className="row mb-3">
-                  <label htmlFor="input3" className="col-sm-2 col-form-label">
+                <div className="mb-3">
+                  <label htmlFor="input3" className="form-label">
                     Age
                   </label>
-                  <div className="col-sm-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="input3"
-                      {...register("age")}
-                      placeholder="Student Age"
-                      required
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="input3"
+                    {...register("age")}
+                    placeholder="Student Age"
+                    required
+                  />
                 </div>
-                <div className="row mb-3">
-                  <label htmlFor="input4" className="col-sm-2 col-form-label">
+                <div className="mb-3">
+                  <label htmlFor="input4" className="form-label">
                     Class
                   </label>
-                  <div className="col-sm-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="input4"
-                      {...register("class")}
-                      placeholder="Student Class"
-                      required
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="input4"
+                    {...register("class")}
+                    placeholder="Student Class"
+                    required
+                  />
                 </div>
-                <div className="row mb-3">
-                  <label htmlFor="input5" className="col-sm-2 col-form-label">
+                <div className="mb-3">
+                  <label htmlFor="input5" className="form-label">
                     Hall
                   </label>
-                  <div className="col-sm-10">
                     <input
                       type="text"
                       className="form-control"
@@ -109,9 +99,8 @@ const AddStudent = () => {
                       placeholder="Hall Name"
                       required
                     />
-                  </div>
                 </div>
-                <div className="row mb-3">
+                <div className="mb-3">
                   <label htmlFor="input6" className="col-sm-2 col-form-label">
                     Status
                   </label>
@@ -150,9 +139,11 @@ const AddStudent = () => {
                     </div>
                   </div>
                 </div>
-                <button type="submit" className="btn btn-primary offset-2">
+                <div className="text-center">
+                <button type="submit" className="btn btn-primary w-100">
                   Add
                 </button>
+                </div>
               </form>
             </div>
           </div>

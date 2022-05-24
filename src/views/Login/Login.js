@@ -12,6 +12,7 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const {setUser} = useAuthContext();
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const inputs = [
     {
@@ -51,7 +52,11 @@ const Login = () => {
         navigate('/home');
       }
     } catch (error) {
-      console.log(error);
+      if(error.response.status === 401){
+        setErrorMessage(error.response.data);
+      }else{
+        setErrorMessage(error.response.data);
+      }
     }
   }
 
@@ -62,6 +67,7 @@ const Login = () => {
   return (
     <div className="object-center">
       <form onSubmit={formHandler}>
+        { errorMessage && <p className='text-center text-danger'>{errorMessage}</p> }
         <h4>Login</h4>
         {
           inputs.map(input => <InputField key={input.id} onChange={onChange} data={input} />)
