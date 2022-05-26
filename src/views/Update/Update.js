@@ -17,14 +17,14 @@ const Update = () => {
 
   return (
     <div className="container">
-      <div className="row justify-content-md-center">
-        <div className="col-md-6">
+      <div className="row justify-content-center">
+        <div className="col-sm-10 col-md-8 col-lg-6">
           {meal ? (
             <div
-              className="card mt-5 border-0"
+              className="card my-5 border-0"
               style={{ background: "#f2f2f2" }}
             >
-              <div className="card-body shadow">
+              <div className="card-body p-4 shadow">
                 <h5 className="card-title mb-5">Update Meal Info</h5>
                 <UpdateForm meal={meal} />
               </div>

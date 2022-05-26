@@ -37,8 +37,8 @@ const DistributeMeal = () => {
   return (
     <div>
       <div className="container">
-        <div className="row justify-content-md-center">
-          <div className="col-sm-12 col-md-8">
+        <div className="row justify-content-center">
+          <div className="col-sm-12 col-md-12 col-lg-8">
             <div className="card mt-5">
               <div className="card-body">
                 <h5 className="card-title text-center mb-3">Search Student</h5>

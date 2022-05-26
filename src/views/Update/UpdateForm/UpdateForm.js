@@ -21,7 +21,7 @@ const UpdateForm = ({ meal }) => {
             Swal.fire("Success!", "Update successful!", "success");
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => Swal.fire("Failed!", "Please try again later.", "error"));
     } else {
       Swal.fire({
         icon: "error",
@@ -33,11 +33,11 @@ const UpdateForm = ({ meal }) => {
 
   return (
     <form method="post" onSubmit={handleSubmit(editDataHandler)}>
-      <div className="row mb-3">
-        <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">
+      <div className="mb-3">
+        <label htmlFor="inputEmail3" className="form-label">
           Name
         </label>
-        <div className="col-sm-10">
+        
           <input
             type="text"
             className="form-control"
@@ -46,12 +46,11 @@ const UpdateForm = ({ meal }) => {
             placeholder="Meal Name"
           />
         </div>
-      </div>
-      <div className="row mb-3">
-        <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">
+      <div className="mb-3">
+        <label htmlFor="inputPassword3" className="form-label">
           Price
         </label>
-        <div className="col-sm-10">
+        
           <input
             type="number"
             className="form-control"
@@ -60,8 +59,7 @@ const UpdateForm = ({ meal }) => {
             placeholder="Price"
           />
         </div>
-      </div>
-      <button type="submit" className="btn btn-warning offset-2">
+      <button type="submit" className="btn btn-warning text-white w-100">
         Update
       </button>
     </form>

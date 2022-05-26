@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import useInterceptor from "../../hooks/useInterceptor";
 
@@ -12,16 +12,19 @@ const AllMeal = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(0);
   const axiosPrivate = useInterceptor();
+  const [payloads, setPayloads] = useState(null);
 
   useEffect(() => {
     axiosPrivate.get(`/meal?limit=${limit}&&page=${currentPage}`)
       .then(res => {
+          setPayloads(res.data.count);
           const totalPage = Math.ceil(res.count / limit);
           setPageSize(totalPage);
+          
           setMeals(res.data.payload);
       })
       .catch(error => console.log(error))
-  }, [axiosPrivate, currentPage, limit]);
+  }, [axiosPrivate, currentPage, limit, payloads]);
 
   const deleteHandler = (id) => {
     Swal.fire({
@@ -37,13 +40,13 @@ const AllMeal = () => {
         axiosPrivate.delete(`/meal/delete/${id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+              Swal.fire("Deleted!", "Your record has been deleted.", "success");
               
               const lestItem = meals.filter((meal) => meal._id !== id);
               setMeals(lestItem);
             }
           })
-          .catch(error => console.log(error))
+          .catch(error => Swal.fire("Failed!", "Please try again later.", "error"));
       }
     });
   };
@@ -56,8 +59,8 @@ const AllMeal = () => {
           text: "You won't be able to revert this!",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "#dc3545",
+          cancelButtonColor: "#20c997",
           confirmButtonText: "Delete",
         })
        .then((result) => {
@@ -72,7 +75,7 @@ const AllMeal = () => {
                 Swal.fire("Success", "Delete Successfully", "success");
               }
             })
-            .catch(err=>console.log(err))
+            .catch(err => Swal.fire("Failed!", "Please try again later.", "error"))
         }
       });
     } else {
@@ -90,16 +93,18 @@ const AllMeal = () => {
 
   return (
     <div className="container">
-      {meals.length === 0 ? (
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: "500px" }}
-        >
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      ) : (
+      {payloads === null || payloads === 0 ?
+        <div className="d-flex justify-content-center align-items-center" style={{ height: "500px" }}>
+          {
+            payloads !== 0 ? (
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+            ) : (
+              <h1 className="mt-5 text-center text-danger">No Data Found</h1>
+            )
+          } 
+        </div> : (
         <div className="row justify-content-md-center">
           <div className="col-md-8 mt-3">
             <div className="d-flex justify-content-between">
@@ -150,56 +155,68 @@ const AllMeal = () => {
               <div>{item > 0 && <small>{item} Selected</small>}</div>
             </div>
 
-            <table className="table table-dark table-hover mt-2 table-bordered text-center">
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {meals.map((meal) => (
-                  <tr key={meal._id}>
-                    <th scope="row">
-                      <form onSubmit={handleSubmit(bulkHandler)} id="form1">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          id="checkboxNoLabel"
-                          value={meal._id}
-                          onClick={(e) => {
-                            counterFunction(e);
-                          }}
-                          {...register("item")}
-                        />
-                      </form>
-                    </th>
-                    <td>{meal.name}</td>
-                    <td>{meal.price}</td>
-                    <td>
-                      <NavLink
-                        to={`/update/${meal._id}`}
-                        className="btn btn-sm btn-outline-primary me-2"
-                      >
-                        edit
-                      </NavLink>
-                      <button
-                        onClick={() => {
-                          deleteHandler(meal._id);
-                        }}
-                        className="btn btn-sm btn-outline-danger"
-                      >
-                        delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <nav aria-label="Page navigation example">
+            <div className="container-table my-5 shadow">
+              <table>
+                <thead>
+                    <tr className="text-center">
+                      <th scope="col">Select</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {
+                    meals.length !== 0 ? 
+                    meals.map((meal, i) => 
+                      <tr className="text-center" key={meal._id}>
+                        {/* <td scope="row">{i + 1}</td> */}
+                        <td>
+                          <form id="form1" onSubmit={handleSubmit(bulkHandler)}>
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              id="checkboxNoLabel"
+                              value={meal._id}
+                              onClick={(e) => {
+                                counterFunction(e);
+                              }}
+                              {...register("statusIDList")}
+                            />
+                          </form>
+                        </td>
+                        <td>{meal.name}</td>
+                        <td>{meal.price}</td>
+                        <td>
+                          <NavLink
+                            to={`/update/${meal._id}`}
+                          >
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 action-icons action-icon-edit" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}> <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                          </NavLink>
+                          <button
+                            className="no-border"
+                            onClick={() => {
+                              deleteHandler(meal._id);
+                            }}
+                          >
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 action-icons action-icon-delete" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}> <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                     :
+                    <tr>
+                        <td colSpan='8' style={{'height': '300px'}} className="text-center bg-white">
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+          </div>
+            <nav aria-label="Page navigation example" className={payloads > limit ? 'd-block' : 'd-none'} >
               <ul className="pagination justify-content-end">
                 <li className="page-item">
                   <button

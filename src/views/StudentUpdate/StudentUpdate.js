@@ -21,11 +21,11 @@ const StudentUpdate = () => {
 
   return (
     <div className="container">
-      <div className="row justify-content-md-center">
-        <div className="col-md-6">
-          <div className="card mt-5">
+      <div className="row justify-content-center">
+        <div className="col-sm-10 col-md-8 col-lg-6">
+          <div className="card my-5 px-3 shadow">
             <div className="card-body">
-              <h5 className="card-title mb-5">Update Student Info</h5>
+              <h4 className="card-title mb-5">Update Student Info</h4>
               {student ? (
                 <UpdateForm data={student} id={id} />
               ) : (

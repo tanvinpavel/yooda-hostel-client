@@ -1,0 +1,25 @@
+.action-icons{
+    width: 22px;
+    height: 22px;
+}
+.action-icon-edit{
+    color: skyblue;
+    margin: 0 3px;
+}
+.action-icon-edit:hover{
+    color: rgb(27, 150, 199);
+}
+
+.action-icon-delete{
+    color: #ffa1a1;
+    margin: 0 3px;
+    border: 0; 
+}
+.action-icon-delete:hover{
+    color: #f02d2d;
+}
+
+.no-border{
+    border: 0;
+    background: transparent;
+}

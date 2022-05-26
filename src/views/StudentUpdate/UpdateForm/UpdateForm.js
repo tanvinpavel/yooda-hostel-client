@@ -32,7 +32,7 @@ const UpdateForm = (props) => {
                 Swal.fire("Success!", "Update successful!", "success");
               }
             })
-            .catch(err => console.log(err));
+            .catch(err => Swal.fire("Failed!", "Please try again later.", "error"));
         }
       });
     } else {
@@ -46,26 +46,24 @@ const UpdateForm = (props) => {
 
   return (
     <form method="post" onSubmit={handleSubmit(formDataHandler)}>
-      <div className="row mb-3">
-        <label htmlFor="inputName1" className="col-sm-3 col-form-label">
-          Student Name
+      <div className="mb-3">
+        <label htmlFor="inputName1" className="form-label">
+          Student Name:
         </label>
-        <div className="col-sm-9">
-          <input
-            type="text"
-            className="form-control"
-            id="inputName1"
-            {...register("name")}
-            placeholder="Student Name"
-            required
-          />
-        </div>
+        <input
+          type="text"
+          className="form-control"
+          id="inputName1"
+          {...register("name")}
+          placeholder="Student Name"
+          required
+        />
       </div>
-      <div className="row mb-3">
-        <label htmlFor="inputRoll2" className="col-sm-3 col-form-label">
+      <div className="mb-3">
+        <label htmlFor="inputRoll2" className="form-label">
           Roll
         </label>
-        <div className="col-sm-9">
+        
           <input
             type="text"
             className="form-control"
@@ -75,12 +73,11 @@ const UpdateForm = (props) => {
             required
           />
         </div>
-      </div>
-      <div className="row mb-3">
-        <label htmlFor="input3" className="col-sm-3 col-form-label">
-          Age
+      <div className="mb-3">
+        <label htmlFor="input3" className="form-label">
+          Age:
         </label>
-        <div className="col-sm-9">
+        
           <input
             type="text"
             className="form-control"
@@ -90,12 +87,11 @@ const UpdateForm = (props) => {
             required
           />
         </div>
-      </div>
-      <div className="row mb-3">
-        <label htmlFor="input4" className="col-sm-3 col-form-label">
-          Class
+      <div className="mb-3">
+        <label htmlFor="input4" className="form-label">
+          Class:
         </label>
-        <div className="col-sm-9">
+        
           <input
             type="text"
             className="form-control"
@@ -105,12 +101,11 @@ const UpdateForm = (props) => {
             required
           />
         </div>
-      </div>
-      <div className="row mb-3">
-        <label htmlFor="input5" className="col-sm-3 col-form-label">
-          Hall
+      <div className="mb-3">
+        <label htmlFor="input5" className="form-label">
+          Hall:
         </label>
-        <div className="col-sm-9">
+        
           <input
             type="text"
             className="form-control"
@@ -120,12 +115,11 @@ const UpdateForm = (props) => {
             required
           />
         </div>
-      </div>
-      <div className="row mb-3">
-        <label htmlFor="input6" className="col-sm-3 col-form-label">
-          Status
+      <div className="mb-3">
+        <label htmlFor="input6" className="form-label">
+          Status:
         </label>
-        <div className="col-sm-9">
+        
           <div className="form-check">
             <input
               className="form-check-input"
@@ -153,8 +147,7 @@ const UpdateForm = (props) => {
             </label>
           </div>
         </div>
-      </div>
-      <button type="submit" className="btn btn-primary offset-3">
+      <button type="submit" className="btn btn-primary w-100">
         Add
       </button>
     </form>

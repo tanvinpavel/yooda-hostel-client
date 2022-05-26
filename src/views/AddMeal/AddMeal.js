@@ -14,13 +14,15 @@ const AddMeal = () => {
           reset();
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        Swal.fire("Failed!", "Failed to add meal!", "error");
+      })
   };
 
   return (
     <div className="container">
-      <div className="row justify-content-md-center">
-        <div className="col-md-6">
+      <div className="row justify-content-center">
+        <div className="col-sm-10 col-md-8 col-lg-6">
           <div className="card shadow mt-5 border-0" style={{ background: "#f2f2f2" }}>
             <div className="card-body m-3">
               <h5 className="card-title mb-5">Add New Meal</h5>

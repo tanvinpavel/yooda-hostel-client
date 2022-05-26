@@ -45,7 +45,7 @@ const [notFound, setNotFound] = useState(false);
   return (
     <div className="container">
       <div className="row justify-content-md-center">
-        <div className="col-sm-12 col-md-8">
+        <div className="col-sm-12 col-md-12 col-lg-10">
           <div className="card mt-5">
             <div className="card-body shadow">
               <h5 className="card-title text-center mb-3">Search Student</h5>
@@ -80,11 +80,11 @@ const [notFound, setNotFound] = useState(false);
                         <th>Status</th>
                     </tr>
                 </thead>
-                {
+                <tbody>
+                  {
                     students.length !== 0 ? 
-                    students.filter(student => query.test(student.name) || query.test(student.roll)).map((student, i) => 
-                        <tbody key={student._id}>
-                            <tr className="text-center">
+                    students.filter(student => query.test(student.name) || query.test(student.roll)).map((student, i) =>
+                            <tr key={student._id} className="text-center">
                                 <td>{++i}</td>
                                 <td>{<Link to={`/memo/${student._id}`}>{student.name}</Link>}</td>
                                 <td>{student.roll}</td>
@@ -97,19 +97,17 @@ const [notFound, setNotFound] = useState(false);
                                   <span className='inactive-status'>Inactive</span> 
                                 }</td>
                             </tr>
-                        </tbody>)
-                     : 
-                        <tbody>
-                            <tr>
-                                <td colSpan='5' style={{'height': '300px'}} className="text-center bg-white">
-                                    <div className="spinner-border" role="status">
-                                        <span className="visually-hidden">Loading...</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    
-                }
+                    )
+                    : 
+                    <tr>
+                        <td colSpan='5' style={{'height': '300px'}} className="text-center bg-white">
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </td>
+                    </tr>
+                  }
+                </tbody>
               </table>
                 {
                     notFound && <h1 className="mt-5 text-center text-danger">No Data Found</h1>

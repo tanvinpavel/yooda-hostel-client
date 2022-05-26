@@ -76,18 +76,18 @@ const DistributionForm = (props) => {
   };
 
   function saveMealRecipe(payload) {
-    axiosPrivate.post("/student/foodDistribution", payload)
+    axiosPrivate.post("/mealDist/foodDistribution", payload)
       .then((data) => {
         if (Object.keys(data).length > 0) {
           Swal.fire("Success!", "Meal Served!", "success");
         }
       })
-      .catch(error => console.log(error))
+      .catch(error => Swal.fire("Failed!", "Please try again later.", "error"));
   }
 
   return (
     <div className="row">
-      <div className="col-md-8 mt-5">
+      <div className="col-md-12 col-lg-8 mt-sm-2 mb-sm-4 order-sm-last order-lg-first mb-lg-0 mt-lg-5">
         <div className="card">
           <div className="card-body">
             <form
@@ -186,7 +186,7 @@ const DistributionForm = (props) => {
           </div>
         </div>
       </div>
-      <div className="col-md-4 mt-5">
+      <div className="col-md-12 col-lg-4 mt-sm-4 mb-sm-2 order-sm-first order-lg-last mb-lg-0 mt-lg-5">
         <div className="card">
           <div className="card-body">
             <h5 className="card-title">Choose Menu</h5>

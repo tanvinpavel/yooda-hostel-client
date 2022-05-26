@@ -33,7 +33,7 @@ const Header = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
-          <Link to="/" className="navbar-brand">Yooda Hostel</Link>
+          <Link to="/" className="navbar-brand">Yooda Hostel <small className="text-secondary">v2.0</small></Link>
           <button
             className="navbar-toggler"
             type="button"

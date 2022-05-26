@@ -1,30 +1,27 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { axiosPrivate } from "../../api/axios";
 
 const AddStudent = () => {
   const { register, handleSubmit, reset } = useForm();
   const formDataHandler = (data) => {
-    fetch("http://localhost:5050/student/addStudent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => res.json())
-      .then((mess) => {
-        if (mess) {
+    axiosPrivate.post('/student/addStudent', data)
+      .then(res => {
+        if (res.data) {
           Swal.fire("Success!", "New meal added successfully!", "success");
           reset();
+        }else{
+          Swal.fire("Failed!", "Please try again later.", "error")
         }
-      });
+      })
+      .catch(err => Swal.fire("Failed!", "Please try again later.", "error"));
   };
 
   return (
     <div className="container">
-      <div className="row justify-content-md-center">
-        <div className="col-md-6">
+      <div className="row justify-content-center">
+        <div className="col-sm-10 col-md-8 col-lg-6">
           <div className="card shadow my-5 border-0" style={{ background: "#f2f2f2" }}>
             <div className="card-body mt-4 mx-4">
               <h5 className="card-title mb-5">Add A New Student</h5>
