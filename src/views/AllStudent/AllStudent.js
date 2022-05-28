@@ -28,7 +28,7 @@ const AllStudent = () => {
         setStudent(res.data.student);
       })
       .catch(err => console.log(err));
-  }, [currentPage, size, reRender, axiosPrivate]);
+  }, [student, currentPage, size, reRender, axiosPrivate]);
 
   const bulkHandler = (data) => {
     const payload = { ...data, action };
@@ -97,8 +97,8 @@ const AllStudent = () => {
             if (res.data.deletedCount === 1) {
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
 
-              const lestItem = student.filter((s) => s._id !== id);
-              setStudent(lestItem);
+              const restItem = student.filter((s) => s._id !== id);
+              setStudent(restItem);
             }
           })
           .catch(err => Swal.fire("Failed!", "Please try again later.", "error"));

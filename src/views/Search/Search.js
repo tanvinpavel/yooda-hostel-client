@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "../../api/axios";
 import "./Search.css";
 
 const Search = () => {
   const [students, setStudents] = useState([]);
-const [query, setQuery] = useState(/^[a-zA-Z0-9)]/i);
+const [query, setQuery] = useState(/[a-zA-Z0-9)]/i);
 const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5050/student")
-      .then((res) => res.json())
-      .then((data) => setStudents(data.student));
+    axios.get('/student')
+      .then(res => setStudents(res.data.student))
+      .catch(err => console.log(err));
   }, []);
 
   const searchHandler = (e) => {
-        setNotFound(false);
-      const regex = new RegExp(`^${e.target.value}`, 'i');
+      setNotFound(false);
+      const regex = new RegExp(`${e.target.value}`, 'i');
       setQuery(regex);
   }
 
@@ -28,18 +29,9 @@ const [notFound, setNotFound] = useState(false);
       const {searchValue} = value;
       const payload = {name: searchValue, roll: searchValue}
 
-      fetch(
-        "http://localhost:5050/student/searchStudent",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => setStudents([data]));
+      axios.post('/student/searchStudent', payload)
+        .then(res => setStudents([res.data]))
+        .catch(err => console.log(err))
   }
 
   return (

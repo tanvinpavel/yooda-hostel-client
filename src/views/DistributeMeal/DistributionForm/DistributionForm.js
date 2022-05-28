@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { currentDate } from "../../../utility";
-import "./distributionForm.css";
-import useInterceptor from "../../../hooks/useInterceptor";
 import axios from "../../../api/axios";
 import useAuthContext from "../../../hooks/useAuthContext";
+import useInterceptor from "../../../hooks/useInterceptor";
+import { currentDate } from "../../../utility";
+import "./distributionForm.css";
 
 const Swal = require("sweetalert2");
 
@@ -87,7 +87,7 @@ const DistributionForm = (props) => {
 
   return (
     <div className="row">
-      <div className="col-md-12 col-lg-8 mt-sm-2 mb-sm-4 order-sm-last order-lg-first mb-lg-0 mt-lg-5">
+      <div className="col-md-12 col-lg-8 mt-2 mb-4 order-last order-lg-first my-lg-5">
         <div className="card">
           <div className="card-body">
             <form
@@ -186,7 +186,7 @@ const DistributionForm = (props) => {
           </div>
         </div>
       </div>
-      <div className="col-md-12 col-lg-4 mt-sm-4 mb-sm-2 order-sm-first order-lg-last mb-lg-0 mt-lg-5">
+      <div className="col-md-12 col-lg-4 mt-4 mb-2 order-first order-lg-last my-lg-5">
         <div className="card">
           <div className="card-body">
             <h5 className="card-title">Choose Menu</h5>
