@@ -28,7 +28,7 @@ const AllStudent = () => {
         setStudent(res.data.student);
       })
       .catch(err => console.log(err));
-  }, [student, currentPage, size, reRender, axiosPrivate]);
+  }, [currentPage, size, reRender, axiosPrivate]);
 
   const bulkHandler = (data) => {
     const payload = { ...data, action };

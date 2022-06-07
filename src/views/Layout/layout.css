@@ -1,3 +1,13 @@
 .block-hight {
   min-height: calc(100vh - 113px);
 }
+.icon{
+  width: 22px;
+  height: 22px;
+  margin-right: 5px;
+}
+.alert-icon{
+  width: 55px;
+  height: 55px;
+  margin: 5px;
+}

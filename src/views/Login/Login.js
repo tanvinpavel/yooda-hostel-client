@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import InputField from '../InputField/InputField';
 import axios from '../../api/axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAuthContext from '../../hooks/useAuthContext';
 
 const Login = () => {
@@ -11,7 +11,9 @@ const Login = () => {
     pass: ''
   });
   const navigate = useNavigate();
+  const location = useLocation();
   const {setUser} = useAuthContext();
+  const from = location?.state?.from?.pathname || '/';
   const [errorMessage, setErrorMessage] = useState(false);
 
   const inputs = [
@@ -48,8 +50,9 @@ const Login = () => {
 
       if(response.data.accessToken){
         setUser(response.data);
+        console.log(response.data);
         localStorage.setItem('isLoggedIn', JSON.stringify(response.data));
-        navigate('/home');
+        navigate(from, {replace: true});
       }
     } catch (error) {
       if(error.response.status === 401){
