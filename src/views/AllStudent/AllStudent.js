@@ -46,7 +46,7 @@ const AllStudent = () => {
         if (result.isConfirmed) {
           
           if(action === 'Delete'){
-            axiosPrivate.post("/student/deleteMultipleStudent", data)
+            axiosPrivate.delete("/student/deleteMultipleStudent", {data: data})
               .then((res) => {
                 if (res.data.deletedCount > 0) {
                   setReRender(res.data.deletedCount);

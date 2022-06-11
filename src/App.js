@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from './views/Home/Home';
-import Header from './views/Header/Header';
 import AddMeal from './views/AddMeal/AddMeal';
 import AllMeal from './views/AllMeal/AllMeal';
 import Update from './views/Update/Update';
@@ -15,8 +14,16 @@ import Signup from "./views/Signup/Signup";
 import PrivateRoute from "./views/PrivateRoute/PrivateRoute";
 import Layout from "./views/Layout/Layout";
 import NotAllowed from "./views/Unauthorized/NotAllowed";
+import PersistentLogin from "./views/PersistentLogin/PersistentLogin";
 
 function App() {
+
+  const roleList = {
+      "Admin": 8274,
+      "MealManager": 4397,
+      "User": 3986
+  } 
+  
   return (
       <Routes>
         <Route path="/" element={<Layout/>}>
@@ -32,16 +39,18 @@ function App() {
           <Route path="/unauthorized" element={<NotAllowed/>} />
 
 {/*                       <== PRIVATE Route ==>                                */}
-          <Route element={<PrivateRoute allowRoles={[8274]}/>}>
-            <Route path="/allStudent" element={<AllStudent/>} />
-            <Route path="/student/update/:id" element={<StudentUpdate/>} />
-            <Route path="/addStudent" element={<AddStudent/>} />
-          </Route>
+          <Route element={<PersistentLogin/>}>
+            <Route element={<PrivateRoute allowRoles={[roleList.Admin]}/>}>
+              <Route path="/allStudent" element={<AllStudent/>} />
+              <Route path="/student/update/:id" element={<StudentUpdate/>} />
+              <Route path="/addStudent" element={<AddStudent/>} />
+            </Route>
 
-          <Route element={<PrivateRoute allowRoles={[8274, 4397]}/>}>
-            <Route path="/addMeal" element={<AddMeal/>} />
-            <Route path="/allMeal" element={<AllMeal/>} />
-            <Route path="/update/:id" element={<Update/>} />
+            <Route element={<PrivateRoute allowRoles={[roleList.Admin, roleList.MealManager]}/>}>
+              <Route path="/addMeal" element={<AddMeal/>} />
+              <Route path="/allMeal" element={<AllMeal/>} />
+              <Route path="/update/:id" element={<Update/>} />
+            </Route>
           </Route>
         </Route>
       </Routes>

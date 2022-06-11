@@ -1,6 +1,3 @@
-import axios from "./api/axios";
-import useAuthContext from "./hooks/useAuthContext";
-
 const getChangesValue = (newObj, oldObj) => {
     if (Object.keys(oldObj).length === 0 
         && Object.keys(newObj).length > 0)

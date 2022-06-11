@@ -3,6 +3,7 @@ import InputField from '../InputField/InputField';
 import axios from '../../api/axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAuthContext from '../../hooks/useAuthContext';
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
 
@@ -15,6 +16,8 @@ const Login = () => {
   const {setUser} = useAuthContext();
   const from = location?.state?.from?.pathname || '/';
   const [errorMessage, setErrorMessage] = useState(false);
+  const [cookies, setCookie] = useCookies(['name']);
+  
 
   const inputs = [
     {
@@ -50,8 +53,6 @@ const Login = () => {
 
       if(response.data.accessToken){
         setUser(response.data);
-        console.log(response.data);
-        localStorage.setItem('isLoggedIn', JSON.stringify(response.data));
         navigate(from, {replace: true});
       }
     } catch (error) {

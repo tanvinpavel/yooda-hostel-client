@@ -52,6 +52,7 @@ const AllMeal = () => {
   };
 
   const bulkHandler = (IDs) => {
+    console.log(IDs);
     if (item > 0) {
       Swal
        .fire({
@@ -65,11 +66,11 @@ const AllMeal = () => {
         })
        .then((result) => {
         if (result.isConfirmed) {
-          axiosPrivate.delete("/meal/deleteMany", { data: IDs})
+          axiosPrivate.delete("/meal/deleteMany", {data: IDs})
             .then((res) => {
               if (res.data.deletedCount > 0) {
                 const restMeal = meals.filter(
-                  (e) => IDs.item.indexOf(e._id) < 0
+                  (e) => IDs.statusIDList.indexOf(e._id) < 0
                 );
                 setMeals(restMeal);
                 Swal.fire("Success", "Delete Successfully", "success");
