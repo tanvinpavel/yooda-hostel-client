@@ -70,6 +70,7 @@ const Signup = () => {
       });
 
       if(response.data.accessToken){
+        console.log(response.data);
         setUser(response.data);
         localStorage.setItem('isLoggedIn', JSON.stringify(response.data));
         navigate('/home', {replace: true});

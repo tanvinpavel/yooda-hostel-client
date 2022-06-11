@@ -14,12 +14,13 @@ import Login from "./views/Login/Login";
 import Signup from "./views/Signup/Signup";
 import PrivateRoute from "./views/PrivateRoute/PrivateRoute";
 import Layout from "./views/Layout/Layout";
+import NotAllowed from "./views/Unauthorized/NotAllowed";
 
 function App() {
   return (
       <Routes>
         <Route path="/" element={<Layout/>}>
-          {/* public route */}
+{/*                       <== PUBLIC Route ==>                                */}
           <Route path="/" element={<Home/>} />
           <Route path="/home" element={<Navigate to="/" />} />
 
@@ -28,15 +29,19 @@ function App() {
           <Route path="/memo/:id" element={<MonthlyMemo/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<Signup/>} />
+          <Route path="/unauthorized" element={<NotAllowed/>} />
 
-          {/* private route */}
-          <Route element={<PrivateRoute/>}>
-            <Route path="/addMeal" element={<AddMeal/>} />
-            <Route path="/allMeal" element={<AllMeal/>} />
-            <Route path="/update/:id" element={<Update/>} />
+{/*                       <== PRIVATE Route ==>                                */}
+          <Route element={<PrivateRoute allowRoles={[8274]}/>}>
             <Route path="/allStudent" element={<AllStudent/>} />
             <Route path="/student/update/:id" element={<StudentUpdate/>} />
             <Route path="/addStudent" element={<AddStudent/>} />
+          </Route>
+
+          <Route element={<PrivateRoute allowRoles={[8274, 4397]}/>}>
+            <Route path="/addMeal" element={<AddMeal/>} />
+            <Route path="/allMeal" element={<AllMeal/>} />
+            <Route path="/update/:id" element={<Update/>} />
           </Route>
         </Route>
       </Routes>

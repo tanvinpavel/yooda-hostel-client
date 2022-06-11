@@ -8,7 +8,9 @@ const Layout = () => {
     return (
         <>
             <header><Header/></header>
-            <main className='block-hight'><Outlet/></main>
+            <main className='block-hight'>
+                <Outlet/>
+            </main>
             <footer><Footer/></footer>
         </>
     );
