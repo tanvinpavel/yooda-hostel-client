@@ -70,9 +70,8 @@ const Signup = () => {
       });
 
       if(response.data.accessToken){
-        console.log(response.data);
+        localStorage.setItem('isLoggedIn', JSON.stringify({name: response.data.name, email: response.data.email, roles: response.data.roles}));
         setUser(response.data);
-        localStorage.setItem('isLoggedIn', JSON.stringify(response.data));
         navigate('/home', {replace: true});
       }
     } catch (error) {
