@@ -26,6 +26,7 @@ const DistributionForm = (props) => {
   const formateDate = currentDate();
 
   const mealDistributeHandler = (data) => {
+    console.log(data);
     if (student._id) {
       const s_id = student._id;
       const shift = {};
@@ -179,7 +180,7 @@ const DistributionForm = (props) => {
                     />
                   )}
               </div>
-              <button type="submit" className={ user?.accessToken ? "btn btn-primary" : "btn btn-primary disabled"}>
+              <button type="submit" className="btn btn-primary">
                 Submit
               </button>
             </form>
@@ -216,7 +217,7 @@ const DistributionForm = (props) => {
                       >
                         <div className="form-check d-flex justify-content-between">
                           <span>
-                            <input className="form-check-input" {...register("foodList")} value={m._id} type="checkbox"
+                            <input className="form-check-input" {...register("foodList")} value={JSON.stringify({meal: m.name, price: m.price})} type="checkbox"
                               id={m._id}
                               required
                             />

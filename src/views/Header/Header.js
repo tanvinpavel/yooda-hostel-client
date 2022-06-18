@@ -14,7 +14,7 @@ const Header = () => {
       
       const response = await axiosPrivate.delete('/auth/logout', {data: {email: user.email}});
       
-      if(response.data.modifiedCount){
+      if(response.status === 204){
         setUser({});
         navigate('/login', {replace: true});
       }

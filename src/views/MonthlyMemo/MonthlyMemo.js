@@ -20,6 +20,7 @@ const MonthlyMemo = () => {
             .then(res => {
                 let thisMonthData = res.data.filter(order => Number(order.date.split('-')[1]) === currentMonth);
                 setNoData(thisMonthData.length);
+                console.log(thisMonthData);
                 setAllOrder(thisMonthData);
             })
             .catch(err => console.log(err))

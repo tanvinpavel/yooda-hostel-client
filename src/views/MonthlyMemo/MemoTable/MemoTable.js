@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const MemoTable = ({allOrder}) => {
     let totalPrice = 0;
@@ -6,7 +6,8 @@ const MemoTable = ({allOrder}) => {
     function calculateTotal(list){
         let eachDayTotal = 0;
         list.forEach(element => {
-            eachDayTotal += parseInt(element.price);
+            console.log(element);
+            eachDayTotal += element.price;
         });
         totalPrice += eachDayTotal;
         return eachDayTotal;
